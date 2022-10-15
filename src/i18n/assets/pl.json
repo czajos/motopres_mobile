@@ -1,0 +1,27 @@
+{
+    "translation": {
+      "screens": {
+        "login": "Zaloguj sie",
+        "register":"Zarejestuj się"
+      },
+      "button":{
+        "login":"Zaloguj sie",
+        "register":"Zarejestuj się"
+      },
+      "loginScreen":{
+        "login":"Zaloguj sie",
+        "phoneNumber":"Numer telefonu",
+        "notHaveAccount":"Nie masz konta? Zarejestruj sie"
+      },
+      "registerScreen":{
+        "welcome":"Witamy!",
+        "register":"Zarejestuj się",
+        "name":"Imię",
+        "lastName":"Nazwisko",
+        "phoneNumber":"Numer telefonu",
+        "48":"+48",
+        "youHaveAccount":"Masz konto? Zaloguj się"
+      }
+      
+    }
+}

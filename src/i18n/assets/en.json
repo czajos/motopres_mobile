@@ -1,0 +1,28 @@
+{
+    "translation": {
+        "screens": {
+          "login": "Sign in",
+          "register":"Sign up",
+          "welcome":"Welcome!"
+        },
+        "button":{
+          "login": "Sign in",
+          "register":"Sign up"
+        },
+        "loginScreen":{
+          "login": "Sign in",
+          "phoneNumber":"Phone number",
+          "notHaveAccount":"Do you not have account? Sign up",
+        },
+        "registerScreen":{
+          "welcome":"Welcome!",
+          "register":"Sign up",
+          "name":"Name",
+          "lastName":"Last name",
+          "phoneNumber":"Phone number",
+          "48":"+48",
+          "youHaveAccount":"Do you have account? Sign in"
+        }
+        
+      }
+}
