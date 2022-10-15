@@ -9,6 +9,9 @@ import {InputLogin} from '../../components/InputLogin';
 import EyeBlockSvg from '../../assets/svg/EyeBlockSvg';
 import {convertAbsoluteToRem} from 'native-base/lib/typescript/theme/tools';
 import EyeOpenSvg from '../../assets/svg/EyeOpenSvg';
+import { useDispatch } from 'react-redux';
+import { AuthActions } from '../../redux/actions/auth.actions';
+import { useAppDispatch } from '../../redux/hook';
 
 const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -16,87 +19,96 @@ export const LoginScreen = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   console.log(showPassword);
   const {t} = useTranslation();
-  const [data, setData] = useState({
-    username: '',
-    password: '',
-    isValidUser: true,
-    isValidPassword: true,
-    checkInput: false,
-    secureTextEntry: true,
-  });
+  const [username,setUserName]=useState<string>('')
+  const [password,setPassword]=useState<string>('')
+  const dispatch=useAppDispatch()
+  
+  const submit=()=>{
+   dispatch(AuthActions.loginAction(username,password))
+  }
+  
 
-  //Sprawdzenie wprowadzanych znaków jeżeli puste pojawia się informacja
-  const validUser = val => {
-    if (val.trim().length > 0) {
-      setData({
-        ...data,
-        username: val,
-        isValidUser: true,
-      });
-    } else {
-      setData({
-        ...data,
-        username: val,
-        isValidUser: false,
-      });
-    }
-  };
+  // const [data, setData] = useState({
+  //   username: '',
+  //   password: '',
+  //   isValidUser: true,
+  //   isValidPassword: true,
+  //   checkInput: false,
+  //   secureTextEntry: true,
+  // });
 
-  const validPassword = val => {
-    if (val.trim().length > 0) {
-      setData({
-        ...data,
-        password: val,
-        isValidPassword: true,
-      });
-    } else {
-      setData({
-        ...data,
-        password: val,
-        isValidPassword: false,
-      });
-    }
-  };
+  // //Sprawdzenie wprowadzanych znaków jeżeli puste pojawia się informacja
+  // const validUser = val => {
+  //   if (val.trim().length > 0) {
+  //     setData({
+  //       ...data,
+  //       username: val,
+  //       isValidUser: true,
+  //     });
+  //   } else {
+  //     setData({
+  //       ...data,
+  //       username: val,
+  //       isValidUser: false,
+  //     });
+  //   }
+  // };
 
-  // odsłanianie hasła ikoną
-  const updateSecureTextEntry = () => {
-    setData({
-      ...data,
-      secureTextEntry: !data.secureTextEntry,
-    });
-  };
+  // const validPassword = val => {
+  //   if (val.trim().length > 0) {
+  //     setData({
+  //       ...data,
+  //       password: val,
+  //       isValidPassword: true,
+  //     });
+  //   } else {
+  //     setData({
+  //       ...data,
+  //       password: val,
+  //       isValidPassword: false,
+  //     });
+  //   }
+  // };
 
-  const inputChangeUserName = text => {
-    if (text.length != 0) {
-      setData({
-        ...data,
-        username: text,
-        checkInput: true,
-      });
-    } else {
-      setData({
-        ...data,
-        username: text,
-        checkInput: false,
-      });
-    }
-  };
+  // // odsłanianie hasła ikoną
+  // const updateSecureTextEntry = () => {
+  //   setData({
+  //     ...data,
+  //     secureTextEntry: !data.secureTextEntry,
+  //   });
+  // };
 
-  const inputChangePassword = text => {
-    if (text.length != 0) {
-      setData({
-        ...data,
-        password: text,
-        checkInput: true,
-      });
-    } else {
-      setData({
-        ...data,
-        password: text,
-        checkInput: false,
-      });
-    }
-  };
+  // const inputChangeUserName = text => {
+  //   if (text.length != 0) {
+  //     setData({
+  //       ...data,
+  //       username: text,
+  //       checkInput: true,
+  //     });
+  //   } else {
+  //     setData({
+  //       ...data,
+  //       username: text,
+  //       checkInput: false,
+  //     });
+  //   }
+  // };
+
+  // const inputChangePassword = text => {
+  //   if (text.length != 0) {
+  //     setData({
+  //       ...data,
+  //       password: text,
+  //       checkInput: true,
+  //     });
+  //   } else {
+  //     setData({
+  //       ...data,
+  //       password: text,
+  //       checkInput: false,
+  //     });
+  //   }
+  // };
   return (
     <View style={styles.container}>
       <Image source={require('../../assets/images/logo-menu.png')} />
@@ -108,7 +120,7 @@ export const LoginScreen = () => {
         }}>
         {t('loginScreen.login')}
       </Text>
-      <InputLogin iconLeft={<PersonSvg />} placeholder={'login'} />
+      <InputLogin value={username} onChangeText={(val)=>setUserName(val)} iconLeft={<PersonSvg />} placeholder={'login'} />
       <InputLogin
         iconLeft={<LockSvg />}
         placeholder={'hasło'}
@@ -120,6 +132,7 @@ export const LoginScreen = () => {
         }
       />
       <TouchableOpacity
+        onPress={submit}
         style={{
           width: 100,
           borderRadius: 10,

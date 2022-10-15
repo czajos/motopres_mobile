@@ -8,27 +8,39 @@ import EyeBlockSvg from '../assets/svg/EyeBlockSvg';
 
 interface InputLoginI {
   iconLeft?: any;
-  InputRightElement?:any;
+  InputRightElement?: any;
   placeholder?: string;
-  password?:boolean;
-  onPress?:()=>void;
-  type?:any;
+  password?: boolean;
+  onPress?: () => void;
+  type?: any;
+  onChangeText?: any;
+  value?: any;
 }
 
-export const InputLogin = ({iconLeft, placeholder,password, InputRightElement,onPress,type}: InputLoginI) => {
+export const InputLogin = ({
+  iconLeft,
+  placeholder,
+  password,
+  InputRightElement,
+  onPress,
+  type,
+  onChangeText,
+  value,
+}: InputLoginI) => {
   return (
     <Row borderBottomWidth={1} borderColor={getColors('primary')} w={'100%'}>
       <Input
         borderWidth={0}
         w={'100%'}
         InputLeftElement={iconLeft}
-        InputRightElement={ InputRightElement}
+        InputRightElement={InputRightElement}
         placeholder={placeholder}
         fontSize={14}
         fontFamily={'Montserrat-Regular'}
         secureTextEntry={password}
         type={type}
-        
+        onChangeText={onChangeText}
+        value={value}
       />
     </Row>
   );
