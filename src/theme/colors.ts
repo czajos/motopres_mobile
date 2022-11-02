@@ -1,9 +1,10 @@
 export const colors = {
   primary: '#BA2727',
   secondary: '#FFFF',
-  gray:'#6A6868',
+  lightGray:'#E1E1E1',
   black:'#000',
-  white:'#FFFFFF'
+  white:'#FFFFFF',
+  green:'#0FA958'
 };
 
 export const getColors = (colorName: keyof typeof colors) => {

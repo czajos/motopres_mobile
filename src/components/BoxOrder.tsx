@@ -1,0 +1,203 @@
+import React, {useState} from 'react';
+import {Box, Row, Text} from 'native-base';
+import {DEVICE_WIDTH} from '../config';
+import {getColors} from '../theme/colors';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {t} from 'i18next';
+import {useSSR, useTranslation} from 'react-i18next';
+import ArrowDownSvg from '../assets/svg/ArrowDownSvg';
+import ArrowUpSvg from '../assets/svg/ArrowUpSvg';
+
+interface BoxOrderI {
+  condition?: string;
+  collect_date?: string;
+  part?: string;
+  band_number?: string | number;
+  indexx?: number;
+  company?: string;
+  commentArea?: string;
+  note?: string;
+}
+
+export const BoxOrder = ({
+  condition,
+  collect_date,
+  part,
+  band_number,
+  indexx,
+  company,
+  commentArea,
+  note,
+}: BoxOrderI) => {
+  const marginHorizontal: number = 5;
+  const widthBox = DEVICE_WIDTH - marginHorizontal * 2;
+  const {t} = useTranslation();
+  const [showMoreInfo, setShowMoreInfo] = useState<boolean>(false);
+
+  return (
+    <Box
+      w={widthBox}
+      minH={'200px'}
+      shadow={3}
+      backgroundColor={getColors('white')}
+      marginY={'10px'}
+      borderRadius={'10px'}>
+      <Row justifyContent={'center'} alignItems={'center'} paddingY={'10px'}>
+        <Text
+          textAlign={'center'}
+          fontSize={15}
+          style={[
+            styles.textHeader,
+            {
+              width: widthBox / 3,
+            },
+          ]}>
+          1222
+        </Text>
+        <View
+          style={{
+            borderRightWidth: 1,
+            borderLeftWidth: 1,
+            borderColor: getColors('lightGray'),
+            paddingHorizontal: 15,
+          }}>
+          <Text
+            textAlign={'center'}
+            fontSize={15}
+            style={[
+              styles.textHeader,
+              {
+                width: widthBox / 3,
+              },
+            ]}>
+            {condition}
+          </Text>
+        </View>
+
+        <Text
+          textAlign={'center'}
+          fontSize={15}
+          style={[
+            styles.textHeader,
+            {
+              color: getColors('green'),
+              width: widthBox / 3,
+            },
+          ]}>
+          {collect_date}
+        </Text>
+      </Row>
+      <Row justifyContent={'center'} marginTop={'10px'}>
+        <Text textAlign={'center'} fontSize={15} style={[styles.textHeader]}>
+          {t('home.commodity')}
+        </Text>
+        <Text textAlign={'center'} fontSize={15} style={[styles.textData]}>
+          {' ' + part}
+        </Text>
+      </Row>
+      <Row
+        justifyContent={'space-between'}
+        borderTopWidth={1}
+        borderBottomWidth={1}
+        borderColor={getColors('lightGray')}
+        paddingY={'10px'}
+        marginTop={'15px'}>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRightWidth: 1,
+            borderColor: getColors('lightGray'),
+            paddingHorizontal: 10,
+          }}>
+          <Text textAlign={'center'} fontSize={15} style={[styles.textHeader]}>
+            {t('home.deposit')}
+          </Text>
+          <Text>x</Text>
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRightWidth: 1,
+            borderColor: getColors('lightGray'),
+            paddingHorizontal: 15,
+          }}>
+          <Text textAlign={'center'} fontSize={15} style={[styles.textHeader]}>
+            {t('home.facture')}
+          </Text>
+          <Text>x</Text>
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRightWidth: 1,
+            borderColor: getColors('lightGray'),
+            paddingHorizontal: 10,
+          }}>
+          <Text textAlign={'center'} fontSize={15} style={[styles.textHeader]}>
+            {t('home.band')}
+          </Text>
+          <Text style={styles.textData}>{band_number}</Text>
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRightWidth: 1,
+            borderColor: getColors('lightGray'),
+            paddingHorizontal: 10,
+          }}>
+          <Text textAlign={'center'} fontSize={15} style={[styles.textHeader]}>
+            {t('home.index')}
+          </Text>
+          <Text style={styles.textData}>{indexx}</Text>
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingHorizontal: 10,
+          }}>
+          <Text textAlign={'center'} fontSize={15} style={[styles.textHeader]}>
+            {t('home.contractor')}
+          </Text>
+          <Text style={styles.textData}>{company}</Text>
+        </View>
+      </Row>
+      <View
+        style={{
+          marginTop: 15,
+          paddingHorizontal: 10,
+          paddingBottom: 10,
+          alignItems: 'center',
+        }}>
+        <Text textAlign={'center'} fontSize={15} style={[styles.textHeader]}>
+          {t('home.info')}
+        </Text>
+        <Text
+          style={[styles.textData, {textAlign: 'center', flexWrap: 'wrap'}]}
+          numberOfLines={showMoreInfo === false ? 1 : 0}>
+          {note}
+        </Text>
+      </View>
+      <TouchableOpacity
+        onPress={() => setShowMoreInfo(!showMoreInfo)}
+        style={{alignItems: 'center', padding: 10}}>
+        {showMoreInfo ? <ArrowUpSvg /> : <ArrowDownSvg />}
+      </TouchableOpacity>
+    </Box>
+  );
+};
+
+const styles = StyleSheet.create({
+  textHeader: {
+    fontFamily: 'Montserrat-Bold',
+    color: getColors('black'),
+  },
+  textData: {
+    fontFamily: 'Montserrat-Regular',
+    color: getColors('black'),
+  },
+});

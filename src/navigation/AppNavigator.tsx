@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import { AuthStackNavigation } from './AuthStackNavigation';
 import { SplashScreen } from '../screens/SplashScreen';
+import { MainStackNavigation } from './MainStackNavigation';
 
 
 const AppNavigator = () => {
@@ -18,7 +19,8 @@ const AppNavigator = () => {
       {splash ? (
         <SplashScreen/>
       ):
-      <AuthStackNavigation/> 
+      // <AuthStackNavigation/> 
+      <MainStackNavigation/>
       }
     </NavigationContainer>
 

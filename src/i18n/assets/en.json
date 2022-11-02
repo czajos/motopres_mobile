@@ -12,7 +12,7 @@
         "loginScreen":{
           "login": "Sign in",
           "phoneNumber":"Phone number",
-          "notHaveAccount":"Do you not have account? Sign up",
+          "notHaveAccount":"Do you not have account? Sign up"
         },
         "registerScreen":{
           "welcome":"Welcome!",
@@ -22,6 +22,15 @@
           "phoneNumber":"Phone number",
           "48":"+48",
           "youHaveAccount":"Do you have account? Sign in"
+        },
+        "home":{
+          "commodity":"Commodity:",
+          "deposit":"K/M",
+          "facture":"FV",
+          "band":"Band nr",
+          "index":"Index",
+          "contractor":"Contractor",
+          "info":"Info"
         }
         
       }

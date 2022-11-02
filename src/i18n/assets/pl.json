@@ -21,6 +21,16 @@
         "phoneNumber":"Numer telefonu",
         "48":"+48",
         "youHaveAccount":"Masz konto? Zaloguj się"
+      },
+      "home":{
+        "commodity":"Towar:",
+        "deposit":"K/M",
+        "facture":"FV",
+        "band":"Nr opaski",
+        "index":"Index",
+        "contractor":"Kontrahent",
+        "info":"Uwagi"
+        
       }
       
     }
