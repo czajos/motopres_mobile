@@ -10,7 +10,7 @@ export namespace OrdersActions {
     async dispatch=>{
         try{
             // const res = await instance.get('todo/get', {
-            //     // params: {onPage: NOTIFICATIONS_FOR_PAGE, page,read},
+            //     // params: {onPage: ORDERS_FOR_PAGE, page,read},
             //   });
               const res=data
               dispatch(ordersThunk(res))

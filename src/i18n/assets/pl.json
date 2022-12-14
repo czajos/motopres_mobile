@@ -11,7 +11,7 @@
       "loginScreen":{
         "login":"Zaloguj sie",
         "phoneNumber":"Numer telefonu",
-        "notHaveAccount":"Nie masz konta? Zarejestruj sie"
+        "notHaveAccount":"Nie masz konta? Zarejestruj się"
       },
       "registerScreen":{
         "welcome":"Witamy!",
@@ -30,7 +30,21 @@
         "index":"Index",
         "contractor":"Kontrahent",
         "info":"Uwagi"
-        
+      },
+      "modal":{
+        "addOrders":"Dodaj zlecenie",
+        "new":"Nowe / używane",
+        "reg":"Regenerowane"
+      },
+      "formAdd":{
+        "commodity":"Towar",
+        "deposit":"K/M",
+        "facture":"FV",
+        "band":"Nr opaski",
+        "index":"Index",
+        "contractor":"Kontrahent",
+        "info":"Uwagi",
+        "add":"Dodaj"
       }
       
     }

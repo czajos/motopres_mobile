@@ -1,11 +1,11 @@
-import {AuthSliceIsLoggedT, AuthSliceTokenT} from './auth.types';
-import {setIsLogged, setToken} from './auth.slice';
+import {AuthSliceIsEditorT, AuthSliceTokenT} from './auth.types';
+import {setIsEditor, setToken} from './auth.slice';
 import {AppThunk} from '../../AppThunk';
 
-export const setIsLoggedThunk =
-  (isLogged: AuthSliceIsLoggedT): AppThunk =>
+export const setIsEditorThunk =
+  (isLogged: AuthSliceIsEditorT): AppThunk =>
   dispatch => {
-    dispatch(setIsLogged(isLogged));
+    dispatch(setIsEditor(isLogged));
   };
 
 export const setTokenThunk =

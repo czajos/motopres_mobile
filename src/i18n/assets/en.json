@@ -31,6 +31,21 @@
           "index":"Index",
           "contractor":"Contractor",
           "info":"Info"
+        },
+        "modal":{
+          "addOrders":"Add order",
+          "new":"New / used",
+          "reg":"Regenerated"
+        },
+        "formAdd":{
+          "commodity":"Towar",
+          "deposit":"K/M",
+          "facture":"FV",
+          "band":"Nr opaski",
+          "index":"Index",
+          "contractor":"Kontrahent",
+          "info":"Uwagi",
+        "add":"Dodaj"
         }
         
       }

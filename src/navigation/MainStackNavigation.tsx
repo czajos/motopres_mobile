@@ -16,6 +16,7 @@ export type MainStackNaviagtionParamList={
 export const MainStackNavigation = () => {
 const Drawer = createDrawerNavigator<MainStackNaviagtionParamList>();
 
+
   return (
     <Drawer.Navigator drawerContent={props => <DrawerNavigation {...props} />}>
       <Drawer.Screen
@@ -33,7 +34,7 @@ const Drawer = createDrawerNavigator<MainStackNaviagtionParamList>();
         name="DoneScreen"
         component={DoneScreen}
         options={{
-          title: 'Zlecenia',
+          title: 'Wykonane',
           headerStyle: {
             backgroundColor: '#BA2727',
           },

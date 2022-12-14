@@ -104,7 +104,6 @@ export const BoxOrder = ({
       <Box
         onLayout={event => {
           var {x, y, width, height} = event.nativeEvent.layout;
-          // console.log(height);
           setActualHeight(height);
         }}
         w={widthBox}

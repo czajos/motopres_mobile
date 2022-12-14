@@ -15,7 +15,6 @@ const orderSlice = createSlice({
   reducers: {
     setOrders: (state, action: PayloadAction<OrdersI[]>) => {
         state.data=action.payload;
-        // console.log('orders in slice',state.data)
       },
       deleteOrdersFromState: (
         state: any,

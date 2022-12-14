@@ -1,18 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {Box, Pressable, Text, View} from 'native-base';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, TouchableOpacity,Text} from 'react-native';
 import {getColors} from '../theme/colors';
 
-interface Button {
+interface ButtonAppI {
   title: string;
-  width: number | string;
-  height: number;
-  bgColor: string;
-  textColor: string;
-  borderColor: boolean;
-  borderWidth: boolean;
-  marginBottom: number;
-  // onPress: () => void;
+  width?: number | string;
+  height?: number;
+  bgColor?: string;
+  textColor?: string;
+  marginBottom?: number;
+  onPress: () => void;
 }
 
 export const ButtonApp = ({
@@ -21,29 +18,34 @@ export const ButtonApp = ({
   height,
   bgColor,
   textColor,
-  borderColor,
-  borderWidth,
   marginBottom,
-}: Button) => {
+  onPress,
+  ...props
+}: ButtonAppI) => {
   return (
-    <Pressable
-      width={width}
-      height={height}
-      backgroundColor={bgColor}
-      borderRadius={50}
-      justifyContent={'center'}
-      borderWidth={borderWidth ? 2 : null}
-      borderColor={borderColor ? getColors('secondary') : null}
-      marginBottom={marginBottom ? marginBottom : null}>
+    <TouchableOpacity
+    onPress={onPress}
+      style={{
+        width: width,
+        height: height,
+        backgroundColor: bgColor ? bgColor : getColors('primary'),
+        borderRadius: 10,
+        justifyContent: 'center',
+        paddingVertical:10,
+        paddingHorizontal:10,
+        marginBottom:marginBottom
+      }}>
       <Text
         style={{
           textAlign: 'center',
           color: textColor,
-          fontSize: 16,
+          fontSize: 14,
+          fontFamily:'Montserrat-Regular'
         }}
-        bold>
+        {...props}
+        >
         {title}
       </Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 };

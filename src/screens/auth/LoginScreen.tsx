@@ -17,7 +17,6 @@ const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 export const LoginScreen = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  console.log(showPassword);
   const {t} = useTranslation();
   const [username,setUserName]=useState<string>('')
   const [password,setPassword]=useState<string>('')
@@ -125,6 +124,8 @@ export const LoginScreen = () => {
         iconLeft={<LockSvg />}
         placeholder={'hasło'}
         type={showPassword ? 'text' : 'password'}
+        value={password}
+        onChangeText={(val)=>setPassword(val)}
         InputRightElement={
           <Pressable onPress={() => setShowPassword(!showPassword)}>
             {showPassword ? <EyeOpenSvg /> : <EyeBlockSvg />}
@@ -136,7 +137,7 @@ export const LoginScreen = () => {
         style={{
           width: 100,
           borderRadius: 10,
-          backgroundColor: getColors('gray'),
+          backgroundColor: getColors('lightGray'),
           height: 35,
           justifyContent:'center',
           alignItems:'center',

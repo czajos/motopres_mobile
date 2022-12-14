@@ -53,7 +53,7 @@ export const SelectButton = ({
             shadowColor: getColors('black'),
             shadowOpacity: 8,
             elevation: 5,
-            borderWidth: 0.7,
+            // borderWidth: 0.7,
             borderColor: getColors('primary'),
             justifyContent:'flex-start',
             alignItems:'center',

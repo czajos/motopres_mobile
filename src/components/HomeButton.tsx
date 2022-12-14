@@ -10,6 +10,7 @@ interface HomeButtonI {
 export const HomeButton = ({onPress, icon}: HomeButtonI) => {
   return (
     <TouchableOpacity
+    onPress={onPress}
       style={{
         borderRadius: 50,
         width: 45,

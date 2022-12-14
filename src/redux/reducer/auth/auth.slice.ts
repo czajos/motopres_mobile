@@ -1,14 +1,14 @@
 import {
     AuthSliceGuestMode,
     AuthSliceI,
-    AuthSliceIsLoggedT,
+    AuthSliceIsEditorT,
     AuthSliceTokenT,
   } from './auth.types';
   import {createSlice, PayloadAction} from '@reduxjs/toolkit';
   
   const initialState: AuthSliceI = {
     token: null,
-    isLogged: false,
+    isEditor: false,
   };
   
   export const authSlice = createSlice({
@@ -18,12 +18,12 @@ import {
       setToken: (state, action: PayloadAction<AuthSliceTokenT>) => {
         state.token = action.payload;
       },
-      setIsLogged: (state, action: PayloadAction<AuthSliceIsLoggedT>) => {
-        state.isLogged = action.payload;
+      setIsEditor: (state, action: PayloadAction<AuthSliceIsEditorT>) => {
+        state.isEditor = action.payload;
       },
     },
   });
   
-  export const {setToken, setIsLogged} = authSlice.actions;
+  export const {setToken, setIsEditor} = authSlice.actions;
   export default authSlice.reducer;
   
