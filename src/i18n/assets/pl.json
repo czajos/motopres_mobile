@@ -44,7 +44,9 @@
         "index":"Index",
         "contractor":"Kontrahent",
         "info":"Uwagi",
-        "add":"Dodaj"
+        "add":"Dodaj",
+        "date":"Data odbioru",
+        "header":"Dodaj zlecenie - regenerowane"
       }
       
     }

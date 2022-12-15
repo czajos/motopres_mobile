@@ -42,6 +42,10 @@ export const HomeScreen = () => {
     },
   ];
 
+  useEffect(()=>{
+  dispatch(OrdersActions.getOrders())
+  },[])
+
   // const filter =(condition)=>{
   //   if(condition !='Wszytkie'){
   //     data.filter(e=>e.condition ===condition)
@@ -69,6 +73,7 @@ export const HomeScreen = () => {
               indexx={item.indexx}
               company={item.company}
               note={item.note}
+              regenerated={item.condition}
             />
           );
         }}

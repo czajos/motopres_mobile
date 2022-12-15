@@ -9,13 +9,12 @@ export namespace OrdersActions {
     export const getOrders= (): AppThunk<Promise<any>> =>
     async dispatch=>{
         try{
-            // const res = await instance.get('todo/get', {
-            //     // params: {onPage: ORDERS_FOR_PAGE, page,read},
-            //   });
-              const res=data
-              dispatch(ordersThunk(res))
-        }catch{
-
+            const res = await instance.get('/todo/get');
+            console.log('lista zleceń ',res.data)
+            //   const res=data
+              dispatch(ordersThunk(res.data))
+        }catch(e){
+            console.log(e.response)
         }
     }
 }

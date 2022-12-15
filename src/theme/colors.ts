@@ -5,7 +5,8 @@ export const colors = {
   black:'#000',
   white:'#FFFFFF',
   green:'#0FA958',
-  gray:'#C4C4C4'
+  gray:'#C4C4C4',
+  backgrindColorItem:'#F2F2F2'
 };
 
 export const getColors = (colorName: keyof typeof colors) => {

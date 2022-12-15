@@ -31,6 +31,7 @@ interface BoxOrderI
   company?: string;
   commentArea?: string;
   note?: string;
+  regenerated:any;
 }
 
 export const BoxOrder = ({
@@ -42,7 +43,7 @@ export const BoxOrder = ({
   company,
   commentArea,
   note,
-  simultaneousHandlers,
+  regenerated
 }: BoxOrderI) => {
   const marginHorizontal: number = 5;
   const widthBox = DEVICE_WIDTH - marginHorizontal * 2;
@@ -109,7 +110,7 @@ export const BoxOrder = ({
         w={widthBox}
         minH={'200px'}
         shadow={3}
-        backgroundColor={getColors('white')}
+        backgroundColor={regenerated==='Regenerowane'  ? getColors('white') : getColors('backgrindColorItem')}
         marginY={'5px'}
         borderRadius={'10px'}>
         <Row justifyContent={'center'} alignItems={'center'} paddingY={'10px'}>
@@ -249,15 +250,16 @@ export const BoxOrder = ({
           </Text>
           <Text
             style={[styles.textData, {textAlign: 'center', flexWrap: 'wrap'}]}
-            numberOfLines={showMoreInfo === false ? 1 : 0}>
+            // numberOfLines={showMoreInfo === false ? 1 : 10}
+            >
             {note}
           </Text>
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => setShowMoreInfo(!showMoreInfo)}
           style={{alignItems: 'center', padding: 10}}>
           {showMoreInfo ? <ArrowUpSvg /> : <ArrowDownSvg />}
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </Box>
     </Animated.View>
   );
