@@ -99,6 +99,7 @@ export const HomeScreen = () => {
         leftOpenValue={100}
         renderHiddenItem={({item}) => (
           <HiddenItem
+          editor={isEditor}
             onPressEdit={() =>
               navigation.navigate('EditOrderScreen', {
                 id: item.id,
@@ -129,7 +130,7 @@ export const HomeScreen = () => {
           );
         }}
       />
-      <SelectButton bottom={60} editor={isEditor}>
+      <SelectButton editor={isEditor}>
         {selectText.map(item => {
           return (
             <TouchableOpacity
@@ -151,14 +152,11 @@ export const HomeScreen = () => {
           );
         })}
       </SelectButton>
+      {isEditor===true ? 
       <HomeButton
         icon={<AddSvg />}
         onPress={() => navigation.navigate('ChoiceFormScreen')}
-      />
-      <ModalAdd
-        showModal={openModal}
-        hideModal={() => setOpenModal(!openModal)}
-      />
+      /> : null}
     </View>
   );
 };

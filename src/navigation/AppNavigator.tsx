@@ -5,14 +5,15 @@ import {SplashScreen} from '../screens/SplashScreen';
 import {MainStackNavigation} from './MainStackNavigation';
 import {ModeratorStackNavigation} from './ModeratorStackNavigation';
 import {useDispatch, useSelector} from 'react-redux';
-import { InitialActions } from '../redux/actions/initial.actions';
+import {InitialActions} from '../redux/actions/initial.actions';
+import {AuthActions} from '../redux/actions/auth.actions';
 
 const AppNavigator = () => {
   const [splash, setSplash] = useState<boolean>(true);
   const token = useSelector((state: any) => state.auth.token);
   const isEditor = useSelector((state: any) => state.auth.isEditor);
-  const dispatch=useDispatch()
-
+  const dispatch = useDispatch();
+  const [versionApk, setVersionApk] = useState('0.1');
   useEffect(() => {
     const delayDuration: number = 2000;
     setTimeout((): void => setSplash(false), delayDuration);
@@ -25,19 +26,21 @@ const AppNavigator = () => {
     asyncAction();
   }, []);
 
+  useEffect(() => {
+    dispatch(AuthActions.versionAction(versionApk));
+  }, []);
+
   return (
     <NavigationContainer>
-      {
-        splash ? (
-          <SplashScreen />
-        ) : token === null ? (
-          <AuthStackNavigation />
-        ) : isEditor === true ? (
-          <ModeratorStackNavigation />
-        ) : (
-          <MainStackNavigation />
-        )
-      }
+      {splash ? (
+        <SplashScreen />
+      ) : token === null ? (
+        <AuthStackNavigation />
+      ) : isEditor === true ? (
+        <ModeratorStackNavigation />
+      ) : (
+        <MainStackNavigation />
+      )}
     </NavigationContainer>
   );
 };

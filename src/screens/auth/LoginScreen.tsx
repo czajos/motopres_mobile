@@ -137,7 +137,7 @@ export const LoginScreen = () => {
         style={{
           width: 100,
           borderRadius: 10,
-          backgroundColor: getColors('lightGray'),
+          backgroundColor: getColors('gray'),
           height: 35,
           justifyContent:'center',
           alignItems:'center',

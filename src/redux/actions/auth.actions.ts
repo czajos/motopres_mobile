@@ -3,6 +3,7 @@ import {instance} from '../../instance';
 import {genericAsyncStorageOperator} from '../../utils/GenericAsyncStorage.service';
 import {AppThunk} from '../AppThunk';
 import {setIsEditorThunk, setTokenThunk} from '../reducer/auth/auth.thunk';
+import { setVersionApk } from '../reducer/versionApk/versionApk.slice';
 import {InitialActions} from './initial.actions';
 
 export namespace AuthActions {
@@ -38,4 +39,17 @@ export namespace AuthActions {
       console.log(e);
     }
   };
+  export const versionAction =
+    (version:string): AppThunk<Promise<any>> =>
+    async dispatch => {
+      try {
+        const res = await instance.post('/upload/check', {
+         version:version
+        });
+     
+        dispatch(setVersionApk(res.data.update));
+      } catch (e) {
+        console.log(e);
+      }
+    };
 }

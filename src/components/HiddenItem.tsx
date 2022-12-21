@@ -15,6 +15,7 @@ interface HiddenItemI {
   swipeAnimatedValue?: any;
   data?: any;
   undoOrders?: boolean;
+  editor?:boolean;
 }
 
 export const HiddenItem = ({
@@ -23,18 +24,19 @@ export const HiddenItem = ({
   swipeAnimatedValue,
   data,
   undoOrders,
+  editor
 }: HiddenItemI) => {
   return (
     <Animated.View
       style={{
         height: 250,
         alignItems: 'center',
-        justifyContent: undoOrders ? 'flex-end' : 'space-between',
+        justifyContent: undoOrders || editor===false ? 'flex-end' : 'space-between',
         width: '100%',
         padding: 30,
         flexDirection: 'row',
       }}>
-      {undoOrders ? null : (
+      {undoOrders || editor===false ? null : (
         <TouchableOpacity onPress={onPressEdit}>
           <Animated.View
             style={{

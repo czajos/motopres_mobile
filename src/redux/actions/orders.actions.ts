@@ -12,7 +12,7 @@ export namespace OrdersActions {
     async dispatch=>{
         try{
             const res = await instance.get('/todo/get');
-            console.log('lista zleceń ',res.data)
+            // console.log('lista zleceń ',res.data)
             //   const res=data
               dispatch(ordersThunk(res.data))
         }catch(e){

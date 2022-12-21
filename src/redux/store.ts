@@ -5,6 +5,7 @@ import authSlice from './reducer/auth/auth.slice';
 import loaderSlice from './reducer/loader/loader.slice';
 import ordersSlice from './reducer/orders/orders.slice';
 import ordersDoneSlice from './reducer/ordersDone/ordersDone.slice';
+import versionApkSlice from './reducer/versionApk/versionApk.slice';
 
 
 const store = configureStore({
@@ -14,7 +15,8 @@ const store = configureStore({
     addOrders:addOrderSlice,
     addOrderNew:addOrderNewSlice,
     ordersDone:ordersDoneSlice,
-    loader:loaderSlice
+    loader:loaderSlice,
+    versionApk:versionApkSlice
   },
 });
 
