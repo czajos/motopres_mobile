@@ -29,7 +29,10 @@
         "band":"Nr opaski",
         "index":"Index",
         "contractor":"Kontrahent",
-        "info":"Uwagi"
+        "info":"Uwagi",
+        "price":"Cena",
+        "edit":"Edytuj",
+        "back":"Wróć"
       },
       "modal":{
         "addOrders":"Dodaj zlecenie",
@@ -46,7 +49,13 @@
         "info":"Uwagi",
         "add":"Dodaj",
         "date":"Data odbioru",
-        "header":"Dodaj zlecenie - regenerowane"
+        "header":"Dodaj zlecenie - regenerowane",
+        "headerNew":"Dodaj zlecenie - nowe/używane",
+        "price":"Cena",
+        "invoice":"Faktura",
+        "deposit2":"Kaucja/magazyn",
+        "morning":"Rano",
+        "evening":"Wieczór"
       }
       
     }

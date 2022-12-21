@@ -30,7 +30,10 @@
           "band":"Band nr",
           "index":"Index",
           "contractor":"Contractor",
-          "info":"Info"
+          "info":"Info",
+          "price":"Price",
+        "edit":"Edytuj",
+        "back":"Wróć"
         },
         "modal":{
           "addOrders":"Add order",
@@ -47,8 +50,13 @@
           "info":"Uwagi",
         "add":"Dodaj",
         "date":"Data odbioru",
-        "header":"Dodaj zlecenie - regenerowane"
-
+        "header":"Dodaj zlecenie - regenerowane",
+        "headerNew":"Dodaj zlecenie - nowe/używane",
+        "price":"Cena",
+        "invoice":"Invoice",
+        "deposit2":"Kaucja/magazyn",
+        "morning":"Morning",
+        "evening":"Evening"
         }
         
       }

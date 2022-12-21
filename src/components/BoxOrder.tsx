@@ -20,6 +20,8 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import XSvg from '../assets/svg/XSvg';
+import CheckSmallSvg from '../assets/svg/CheckSmallSvg';
 
 interface BoxOrderI
   extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
@@ -32,6 +34,10 @@ interface BoxOrderI
   commentArea?: string;
   note?: string;
   regenerated:any;
+  deposit?:boolean;
+  fv?:boolean;
+  price?:number | string;
+  internal_id?:number | string;
 }
 
 export const BoxOrder = ({
@@ -43,7 +49,11 @@ export const BoxOrder = ({
   company,
   commentArea,
   note,
-  regenerated
+  regenerated,
+  deposit,
+  fv,
+  price,
+  internal_id
 }: BoxOrderI) => {
   const marginHorizontal: number = 5;
   const widthBox = DEVICE_WIDTH - marginHorizontal * 2;
@@ -122,7 +132,7 @@ export const BoxOrder = ({
                 width: widthBox / 3,
               },
             ]}>
-            1222
+         {internal_id}
           </Text>
           <View
             style={{
@@ -182,7 +192,7 @@ export const BoxOrder = ({
             <Text textAlign={'center'} style={[styles.textHeader]}>
               {t('home.deposit')}
             </Text>
-            <Text>x</Text>
+            {deposit ? <CheckSmallSvg/> : <XSvg/>}
           </View>
           <View
             style={{
@@ -196,7 +206,7 @@ export const BoxOrder = ({
             <Text  style={[styles.textHeader]}>
               {t('home.facture')}
             </Text>
-            <Text>x</Text>
+            {fv ? <CheckSmallSvg/> : <XSvg/>}
           </View>
           <View
             style={{
@@ -205,12 +215,12 @@ export const BoxOrder = ({
               borderRightWidth: 1,
               borderColor: getColors('lightGray'),
               paddingHorizontal: 5,
-               width:'20%'
+              width:'20%'
             }}>
             <Text textAlign={'center'} style={[styles.textHeader]}>
-              {t('home.band')}
+              {regenerated==='Regenerowane' ?  t('home.band') :t('home.price') }
             </Text>
-            <Text style={styles.textData}>{band_number}</Text>
+            <Text style={styles.textData}>{regenerated==='Regenerowane' ? band_number : price}</Text>
           </View>
           <View
             style={{

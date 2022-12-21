@@ -1,14 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {
-  TouchableOpacity,
-  View,
-  Text,
-  ScrollView,
-  Platform,
-  StatusBar,
-} from 'react-native';
+import {TouchableOpacity, View, Text, ScrollView, Platform} from 'react-native';
 import BackArrowSvg from '../../assets/svg/BackArrowSvg';
 import {ButtonApp} from '../../components/ButtonApp';
 import {InputApp} from '../../components/InputApp';
@@ -17,33 +10,36 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   resetDataInFormReg,
-  setAddOrders,
   setBandNumber,
   setCompany,
   setDays,
-  setFvReg,
   setIndexx,
   setMonths,
   setNote,
   setPart,
-  setTimeMorning,
   setYears,
 } from '../../redux/reducer/addOrder/addOrder.slice';
 import {SendOrdersActions} from '../../redux/actions/sendOrders.actions';
+import {
+  resetDataInFormNew,
+  setDeposit,
+  setFv,
+  setPrice,
+} from '../../redux/reducer/addOrder/addOrderNew.slice';
 import CheckBox from '@react-native-community/checkbox';
-import {DEVICE_WIDTH} from '../../config';
+import { OrdersActions } from '../../redux/actions/orders.actions';
+import { setLoading } from '../../redux/reducer/loader/loader.slice';
 
-export const AddRegeneratedScreen = () => {
+export const EditOrderScreen = ({route}) => {
   const navigation = useNavigation();
   const {t} = useTranslation();
   const [show, setShow] = useState<boolean>(false);
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
-  const [day, setDay] = useState<number>();
-  const [month, setMonth] = useState<number>();
-  const [year, setYear] = useState<number>();
   const data = useSelector((state: any) => state.addOrders.data);
+  const load=0
   const dispatch = useDispatch();
+  const id=route.params.id
+  const condition=route.params.condition
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -60,35 +56,35 @@ export const AddRegeneratedScreen = () => {
     dispatch(setYears(years));
   };
 
-  const submit = () => {
-    dispatch(SendOrdersActions.sendOrders(data)).then(() => {
-      dispatch(resetDataInFormReg());
-    });
+  const sendEdit = () => {
+   dispatch(OrdersActions.editOrder(id,data)).then(()=>{
+    dispatch(setLoading(true))
+    dispatch(resetDataInFormReg())
+    dispatch(resetDataInFormNew())
+    navigation.goBack()
+    
+  })
   };
+
+  useEffect(()=>{
+      dispatch(OrdersActions.getOneOrder(id,condition))
+  },[id])
 
   console.log(data);
   return (
-    <ScrollView>
-      <StatusBar
-        backgroundColor={getColors('primary')}
-        barStyle="light-content"
-      />
-
+    <ScrollView style={{paddingHorizontal: 15}}>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          // marginTop: 15,
-          backgroundColor: getColors('primary'),
-          height: 60,
-          width: DEVICE_WIDTH,
+          marginTop: 15,
         }}>
         <TouchableOpacity
-          style={{position: 'absolute', left: 15}}
+          style={{position: 'absolute', left: 0}}
           onPress={() => {
-            navigation.navigate('ChoiceFormScreen');
-            dispatch(resetDataInFormReg());
+            navigation.goBack();
+            dispatch(resetDataInFormNew());
           }}>
           <BackArrowSvg />
         </TouchableOpacity>
@@ -96,12 +92,12 @@ export const AddRegeneratedScreen = () => {
           style={{
             fontSize: 18,
             fontFamily: 'Montserrat-Bold',
-            color: getColors('white'),
+            color: getColors('black'),
           }}>
-          {t('formAdd.header')}
+          {t('home.edit')}
         </Text>
       </View>
-      <View style={{marginTop: 40, marginBottom: 50, paddingHorizontal: 15}}>
+      <View style={{marginTop: 40, marginBottom: 50}}>
         <View>
           <Text
             style={{
@@ -138,7 +134,7 @@ export const AddRegeneratedScreen = () => {
             onChange={onChange}
           />
         )}
-        {/* <View
+        <View
           style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
           <Text
             style={{
@@ -147,29 +143,14 @@ export const AddRegeneratedScreen = () => {
               fontWeight: 'bold',
               paddingRight: 10,
             }}>
-            {t('formAdd.morning')}
+            {t('formAdd.deposit2')}
           </Text>
           <CheckBox
             disabled={false}
-            value={data.time_morning}
-            onValueChange={val => dispatch(setTimeMorning(val))}
+            value={data.deposit}
+            onValueChange={val => dispatch(setDeposit(val))}
           />
-           <Text
-            style={{
-              fontSize: 16,
-              color: getColors('black'),
-              fontWeight: 'bold',
-              paddingRight: 10,
-              marginLeft:30
-            }}>
-            {t('formAdd.evening')}
-          </Text>
-          <CheckBox
-            disabled={false}
-            value={data.time_morning}
-            onValueChange={val => dispatch(setTimeMorning(!val))}
-          />
-        </View> */}
+        </View>
         <View
           style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
           <Text
@@ -184,7 +165,7 @@ export const AddRegeneratedScreen = () => {
           <CheckBox
             disabled={false}
             value={data.fv}
-            onValueChange={val => dispatch(setFvReg(val))}
+            onValueChange={val => dispatch(setFv(val))}
           />
         </View>
         <InputApp
@@ -207,6 +188,13 @@ export const AddRegeneratedScreen = () => {
           onChangeText={val => dispatch(setIndexx(val))}
         />
         <InputApp
+          title={t('formAdd.price')}
+          placeholder={t('formAdd.price')}
+          keyboardType={'numeric'}
+          value={data.price}
+          onChangeText={val => dispatch(setPrice(val))}
+        />
+        <InputApp
           title={t('formAdd.contractor')}
           placeholder={t('formAdd.contractor')}
           value={data.company}
@@ -220,13 +208,11 @@ export const AddRegeneratedScreen = () => {
           onChangeText={val => dispatch(setNote(val))}
         />
       </View>
-      <View style={{paddingHorizontal: 15}}>
-        <ButtonApp
-          title={t('formAdd.add')}
-          textColor={getColors('white')}
-          onPress={() => submit()}
-        />
-      </View>
+      <ButtonApp
+        title={t('formAdd.add')}
+        textColor={getColors('white')}
+        onPress={() => sendEdit()}
+      />
     </ScrollView>
   );
 };

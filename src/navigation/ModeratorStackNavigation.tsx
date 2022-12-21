@@ -7,6 +7,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {AddRegeneratedScreen} from '../screens/moderator/AddRegeneratedScreen';
 import {ChoiceFormScreen} from '../screens/moderator/ChoiceFormScreen';
 import {getColors} from '../theme/colors';
+import { AddNewScreen } from '../screens/moderator/AddNewScreen';
+import { EditOrderScreen } from '../screens/moderator/EditOrderScreen';
 
 export type MainStackNaviagtionParamList = {
   HomeScreen: undefined;
@@ -14,6 +16,8 @@ export type MainStackNaviagtionParamList = {
   DoneScreen: undefined;
   HomeStack: undefined;
   ChoiceFormScreen: undefined;
+  AddNewScreen:undefined;
+  EditOrderScreen:undefined;
 };
 
 export const ModeratorStackNavigation = () => {
@@ -38,12 +42,7 @@ export const ModeratorStackNavigation = () => {
         />
         <Drawer.Screen
           options={{
-            title: 'Dodaj zlecenie',
-            headerStyle: {
-              backgroundColor: '#BA2727',
-            },
-
-            headerTintColor: '#fff',
+            headerShown: false,
           }}
           name={'ChoiceFormScreen'}
           component={ChoiceFormScreen}
@@ -51,6 +50,20 @@ export const ModeratorStackNavigation = () => {
         <Drawer.Screen
           name={'AddRegeneratedScreen'}
           component={AddRegeneratedScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+          <Drawer.Screen
+          name={'AddNewScreen'}
+          component={AddNewScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+          <Drawer.Screen
+          name={'EditOrderScreen'}
+          component={EditOrderScreen}
           options={{
             headerShown: false,
           }}
@@ -72,7 +85,11 @@ export const ModeratorStackNavigation = () => {
         name="DoneScreen"
         component={DoneScreen}
         options={{
-          headerShown: false,
+          title: 'Wykonane',
+          headerStyle: {
+            backgroundColor: '#BA2727',
+          },
+          headerTintColor: '#fff',
         }}
       />
     </Drawer.Navigator>

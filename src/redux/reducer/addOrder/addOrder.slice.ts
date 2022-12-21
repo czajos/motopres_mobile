@@ -12,6 +12,8 @@ const initialState: AddOrder.AddOrderStateI = {
     day: '',
     month: '',
     year: '',
+    time_morning:false,
+    fv:false
   },
 };
 
@@ -46,6 +48,12 @@ const orderSlice = createSlice({
     setYears: (state, action: PayloadAction<AddOrder.Year>) => {
       state.data.year = action.payload;
     },
+    setFvReg: (state, action: PayloadAction<AddOrder.Invoice>) => {
+      state.data.fv = action.payload;
+    },
+    setTimeMorning: (state, action: PayloadAction<AddOrder.TimeMorning>) => {
+      state.data.time_morning = action.payload;
+    },
     resetDataInFormReg: () => initialState,
   },
 });
@@ -60,6 +68,8 @@ export const {
   setMonths,
   setNote,
   setYears,
+  setFvReg,
+  setTimeMorning,
   resetDataInFormReg
 } = orderSlice.actions;
 export default orderSlice.reducer;

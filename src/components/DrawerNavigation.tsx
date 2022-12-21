@@ -11,6 +11,37 @@ import { AuthActions } from '../redux/actions/auth.actions';
 export function DrawerNavigation(props) {
 const dispatch=useDispatch()
 
+// const downloadPath= `${RNFS.ExternalStorageDirectoryPath}/Download/app-release.apk`
+ 
+    // const downloadNewVersion = () => {
+   
+    //     const android = RNFetchBlob.android;
+    //     RNFetchBlob.config({
+    //         appendExt: 'apk',
+    //         timeout: 180000,
+    //         addAndroidDownloads: {
+    //             notification: true,
+    //             useDownloadManager: true,
+    //             mime: 'application/vnd.android.package-archive',
+    //             mediaScannable: true,
+    //             title: "Motopres aktualizacja",
+    //             description: '',
+    //             path:downloadPath
+               
+    //         }
+    //     })
+    //         .fetch("GET", `${url}/upload/download`)
+    //         .then(res => {
+    //             // console.log(res)
+    //             // if (res.respInfo.timeout) {
+    //             //     Linking.openURL(`${url}/upload/download`)
+    //             //     return;
+    //             // }
+    //             android.actionViewIntent(res.path(), 'application/vnd.android.package-archive')
+    //         })
+    // }
+
+
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView {...props}>

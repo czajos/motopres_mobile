@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
+import { useSelector } from 'react-redux';
 import CloseSvg from '../assets/svg/CloseSvg';
 import ListSvg from '../assets/svg/ListSvg';
 import {getColors} from '../theme/colors';
@@ -10,6 +11,7 @@ interface SelectButtonI {
   icon?: any;
   bottom?: number;
   children?: any;
+  editor?:boolean;
 }
 
 export const SelectButton = ({
@@ -17,8 +19,10 @@ export const SelectButton = ({
   icon,
   bottom,
   children,
+  editor
 }: SelectButtonI) => {
   const [showList, setShowList] = useState<boolean>(false);
+
   return (
     <>
       <TouchableOpacity
@@ -44,7 +48,7 @@ export const SelectButton = ({
             height: 180,
             backgroundColor: getColors('white'),
             position: 'absolute',
-            bottom: 10,
+            bottom:editor ? 60 : 10,
             right: 10,
             borderRadius: 10,
             borderBottomRightRadius: 22,

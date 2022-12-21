@@ -9,6 +9,24 @@ export namespace AddOrder {
       day: Day;
       month: Month;
       year: Year;
+      time_morning:TimeMorning;
+      fv:Invoice,
+    };
+  }
+
+  export interface AddOrderNewStateI {
+    data: {
+      part: Part;
+      band_number: BandNumber;
+      indexx: Indexx;
+      company: Company;
+      price:Price;
+      note: Note;
+      day: Day;
+      month: Month;
+      year: Year;
+      fv:Invoice,
+      deposit:Deposit
     };
   }
 
@@ -20,4 +38,9 @@ export namespace AddOrder {
   export type Day = string;
   export type Month = number | string;
   export type Year = number | string;
+  export type Price = number | string;
+  export type Invoice=boolean
+  export type Deposit=boolean
+  export type TimeMorning=boolean
+
 }
