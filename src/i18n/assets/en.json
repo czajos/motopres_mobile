@@ -1,63 +1,63 @@
 {
-    "translation": {
-        "screens": {
-          "login": "Sign in",
-          "register":"Sign up",
-          "welcome":"Welcome!"
-        },
-        "button":{
-          "login": "Sign in",
-          "register":"Sign up"
-        },
-        "loginScreen":{
-          "login": "Sign in",
-          "phoneNumber":"Phone number",
-          "notHaveAccount":"Do you not have account? Sign up"
-        },
-        "registerScreen":{
-          "welcome":"Welcome!",
-          "register":"Sign up",
-          "name":"Name",
-          "lastName":"Last name",
-          "phoneNumber":"Phone number",
-          "48":"+48",
-          "youHaveAccount":"Do you have account? Sign in"
-        },
-        "home":{
-          "commodity":"Commodity:",
-          "deposit":"K/M",
-          "facture":"FV",
-          "band":"Band nr",
-          "index":"Index",
-          "contractor":"Contractor",
-          "info":"Info",
-          "price":"Price",
-        "edit":"Edytuj",
-        "back":"Wróć"
-        },
-        "modal":{
-          "addOrders":"Add order",
-          "new":"New / used",
-          "reg":"Regenerated"
-        },
-        "formAdd":{
-          "commodity":"Towar",
-          "deposit":"K/M",
-          "facture":"FV",
-          "band":"Nr opaski",
-          "index":"Index",
-          "contractor":"Kontrahent",
-          "info":"Uwagi",
-        "add":"Dodaj",
-        "date":"Data odbioru",
-        "header":"Dodaj zlecenie - regenerowane",
-        "headerNew":"Dodaj zlecenie - nowe/używane",
-        "price":"Cena",
-        "invoice":"Invoice",
-        "deposit2":"Kaucja/magazyn",
-        "morning":"Morning",
-        "evening":"Evening"
-        }
-        
-      }
+  "translation": {
+    "screens": {
+      "login": "Zaloguj sie",
+      "register":"Zarejestuj się"
+    },
+    "button":{
+      "login":"Zaloguj sie",
+      "register":"Zarejestuj się"
+    },
+    "loginScreen":{
+      "login":"Zaloguj sie",
+      "phoneNumber":"Numer telefonu",
+      "notHaveAccount":"Nie masz konta? Zarejestruj się"
+    },
+    "registerScreen":{
+      "welcome":"Witamy!",
+      "register":"Zarejestuj się",
+      "name":"Imię",
+      "lastName":"Nazwisko",
+      "phoneNumber":"Numer telefonu",
+      "48":"+48",
+      "youHaveAccount":"Masz konto? Zaloguj się"
+    },
+    "home":{
+      "commodity":"Towar:",
+      "deposit":"K/M",
+      "facture":"FV",
+      "band":"Nr opaski",
+      "index":"Index",
+      "contractor":"Kontrahent",
+      "info":"Uwagi",
+      "price":"Cena",
+      "edit":"Edytuj",
+      "back":"Wróć"
+    },
+    "modal":{
+      "addOrders":"Dodaj zlecenie",
+      "new":"Nowe / używane",
+      "reg":"Regenerowane"
+    },
+    "formAdd":{
+      "commodity":"Towar",
+      "deposit":"K/M",
+      "facture":"FV",
+      "band":"Nr opaski",
+      "index":"Index",
+      "contractor":"Kontrahent",
+      "info":"Uwagi",
+      "add":"Dodaj",
+      "date":"Data odbioru",
+      "header":"Dodaj zlecenie - regenerowane",
+      "headerNew":"Dodaj zlecenie - nowe/używane",
+      "price":"Cena",
+      "invoice":"Faktura",
+      "deposit2":"Kaucja/magazyn",
+      "morning":"Rano",
+      "evening":"Wieczór",
+      "id":"ID"
+    }
+    
+  }
 }

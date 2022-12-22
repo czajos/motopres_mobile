@@ -14,20 +14,19 @@ import {
   setBandNumberNew,
   setCompanyNew,
   setDaysNew,
-  setDeposit,
   setDepositNew,
-  setFv,
   setFvNew,
   setIndexxNew,
+  setInternalIdNew,
   setMonthsNew,
   setNoteNew,
   setPartNew,
-  setPrice,
   setPriceNew,
   setYearsNew,
 } from '../../redux/reducer/addOrder/addOrderNew.slice';
 import CheckBox from '@react-native-community/checkbox';
 import { DEVICE_WIDTH } from '../../config';
+import { setLoading } from '../../redux/reducer/loader/loader.slice';
 
 export const AddNewScreen = () => {
   const navigation = useNavigation();
@@ -55,7 +54,8 @@ export const AddNewScreen = () => {
   const submit = () => {
     dispatch(SendOrdersActions.sendOrdersNew(data)).then(() => {
       dispatch(resetDataInFormNew());
-    });
+      dispatch(setLoading(true))
+    }).finally(()=>navigation.navigate('HomeScreen'))
   };
 
   console.log(data);
@@ -107,11 +107,9 @@ export const AddNewScreen = () => {
               paddingTop: 15,
             }}>
             <View style={{flexDirection: 'row'}}>
-              <Text style={{color: 'black'}}>{data.day}</Text>
-              <Text>/</Text>
-              <Text style={{color: 'black'}}>{data.month}</Text>
-              <Text>/</Text>
-              <Text style={{color: 'black'}}>{data.year}</Text>
+            <Text style={{color: getColors('black')}}>{data.day +'/'}</Text>
+              <Text style={{color: getColors('black')}}>{data.month + '/'}</Text>
+              <Text style={{color: getColors('black')}}>{data.year}</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -159,6 +157,12 @@ export const AddNewScreen = () => {
             onValueChange={val => dispatch(setFvNew(val))}
           />
         </View>
+        <InputApp
+          title={t('formAdd.id')}
+          placeholder={t('formAdd.id')}
+          value={data.internal_id}
+          onChangeText={val => dispatch(setInternalIdNew(val))}
+        />
         <InputApp
           title={t('formAdd.commodity')}
           placeholder={t('formAdd.commodity')}

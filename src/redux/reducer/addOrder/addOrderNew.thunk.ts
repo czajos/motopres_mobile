@@ -1,9 +1,9 @@
 import {AppThunk} from '../../AppThunk';
-import { setAddOrders } from './addOrder.slice';
 import { AddOrder } from './addOrder.types';
+import { setAddOrdersNew } from './addOrderNew.slice';
 
 export const addOrderNewThunk =
   (addNewOrders: AddOrder.AddOrderNewStateI): AppThunk =>
   dispatch => {
-    dispatch(setAddOrders(addNewOrders));
+    dispatch(setAddOrdersNew(addNewOrders));
   };

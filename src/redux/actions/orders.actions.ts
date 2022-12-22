@@ -39,7 +39,6 @@ export namespace OrdersActions {
             }else{
                 dispatch(addOrderNewThunk(res.data))
             }
-            
         }catch(e){
             console.log(e.response)
         }

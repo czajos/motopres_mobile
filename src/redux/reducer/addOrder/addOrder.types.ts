@@ -1,6 +1,7 @@
 export namespace AddOrder {
   export interface AddOrderStateI {
     data: {
+      internal_id:Internal_id;
       part: Part;
       band_number: BandNumber;
       indexx: Indexx;
@@ -10,12 +11,14 @@ export namespace AddOrder {
       month: Month;
       year: Year;
       time_morning:TimeMorning;
-      fv:Invoice,
+      fv:Invoice;
+      deposit:Deposit;
     };
   }
 
   export interface AddOrderNewStateI {
     data: {
+      internal_id:Internal_id;
       part: Part;
       band_number: BandNumber;
       indexx: Indexx;
@@ -25,8 +28,8 @@ export namespace AddOrder {
       day: Day;
       month: Month;
       year: Year;
-      fv:Invoice,
-      deposit:Deposit
+      fv:Invoice;
+      deposit:Deposit;
     };
   }
 
@@ -42,5 +45,5 @@ export namespace AddOrder {
   export type Invoice=boolean
   export type Deposit=boolean
   export type TimeMorning=boolean
-
+  export type Internal_id=number | string;
 }

@@ -17,21 +17,22 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   resetDataInFormReg,
-  setAddOrders,
   setBandNumber,
   setCompany,
   setDays,
+  setDepositReg,
   setFvReg,
   setIndexx,
+  setInternalId,
   setMonths,
   setNote,
   setPart,
-  setTimeMorning,
   setYears,
 } from '../../redux/reducer/addOrder/addOrder.slice';
 import {SendOrdersActions} from '../../redux/actions/sendOrders.actions';
 import CheckBox from '@react-native-community/checkbox';
 import {DEVICE_WIDTH} from '../../config';
+import { setLoading } from '../../redux/reducer/loader/loader.slice';
 
 export const AddRegeneratedScreen = () => {
   const navigation = useNavigation();
@@ -63,7 +64,8 @@ export const AddRegeneratedScreen = () => {
   const submit = () => {
     dispatch(SendOrdersActions.sendOrders(data)).then(() => {
       dispatch(resetDataInFormReg());
-    });
+      dispatch(setLoading(true))
+    }).finally(()=>navigation.navigate('HomeScreen'))
   };
 
   console.log(data);
@@ -120,11 +122,9 @@ export const AddRegeneratedScreen = () => {
               paddingTop: 15,
             }}>
             <View style={{flexDirection: 'row'}}>
-              <Text style={{color: 'black'}}>{data.day}</Text>
-              <Text>/</Text>
-              <Text style={{color: 'black'}}>{data.month}</Text>
-              <Text>/</Text>
-              <Text style={{color: 'black'}}>{data.year}</Text>
+              <Text style={{color: getColors('black')}}>{data.day +'/'}</Text>
+              <Text style={{color: getColors('black')}}>{data.month + '/'}</Text>
+              <Text style={{color: getColors('black')}}>{data.year}</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -170,6 +170,23 @@ export const AddRegeneratedScreen = () => {
             onValueChange={val => dispatch(setTimeMorning(!val))}
           />
         </View> */}
+         <View
+          style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
+          <Text
+            style={{
+              fontSize: 16,
+              color: getColors('black'),
+              fontWeight: 'bold',
+              paddingRight: 10,
+            }}>
+            {t('formAdd.deposit2')}
+          </Text>
+          <CheckBox
+            disabled={false}
+            value={data.deposit}
+            onValueChange={val => dispatch(setDepositReg(val))}
+          />
+        </View>
         <View
           style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
           <Text
@@ -187,6 +204,12 @@ export const AddRegeneratedScreen = () => {
             onValueChange={val => dispatch(setFvReg(val))}
           />
         </View>
+        <InputApp
+          title={t('formAdd.id')}
+          placeholder={t('formAdd.id')}
+          value={data.internal_id}
+          onChangeText={val => dispatch(setInternalId(val))}
+        />
         <InputApp
           title={t('formAdd.commodity')}
           placeholder={t('formAdd.commodity')}
@@ -220,7 +243,7 @@ export const AddRegeneratedScreen = () => {
           onChangeText={val => dispatch(setNote(val))}
         />
       </View>
-      <View style={{paddingHorizontal: 15}}>
+      <View style={{paddingHorizontal:15,paddingBottom:40}}>
         <ButtonApp
           title={t('formAdd.add')}
           textColor={getColors('white')}

@@ -13,7 +13,10 @@ import {
   setBandNumber,
   setCompany,
   setDays,
+  setDepositReg,
+  setFvReg,
   setIndexx,
+  setInternalId,
   setMonths,
   setNote,
   setPart,
@@ -22,13 +25,22 @@ import {
 import {SendOrdersActions} from '../../redux/actions/sendOrders.actions';
 import {
   resetDataInFormNew,
-  setDeposit,
-  setFv,
-  setPrice,
+  setCompanyNew,
+  setDaysNew,
+  setDepositNew,
+  setFvNew,
+  setIndexxNew,
+  setInternalIdNew,
+  setMonthsNew,
+  setNoteNew,
+  setPartNew,
+  setPriceNew,
+  setYearsNew,
 } from '../../redux/reducer/addOrder/addOrderNew.slice';
 import CheckBox from '@react-native-community/checkbox';
-import { OrdersActions } from '../../redux/actions/orders.actions';
-import { setLoading } from '../../redux/reducer/loader/loader.slice';
+import {OrdersActions} from '../../redux/actions/orders.actions';
+import {setLoading} from '../../redux/reducer/loader/loader.slice';
+import {DEVICE_WIDTH} from '../../config';
 
 export const EditOrderScreen = ({route}) => {
   const navigation = useNavigation();
@@ -36,10 +48,10 @@ export const EditOrderScreen = ({route}) => {
   const [show, setShow] = useState<boolean>(false);
   const [date, setDate] = useState(new Date());
   const data = useSelector((state: any) => state.addOrders.data);
-  const load=0
+  const dataNew = useSelector((state: any) => state.addOrderNew.data);
   const dispatch = useDispatch();
-  const id=route.params.id
-  const condition=route.params.condition
+  const id = route.params.id;
+  const condition = route.params.condition;
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -51,39 +63,50 @@ export const EditOrderScreen = ({route}) => {
     let days = newDate.getDate();
     let months = newDate.getMonth() + 1;
     let years = newDate.getFullYear();
-    dispatch(setDays(days));
-    dispatch(setMonths(months));
-    dispatch(setYears(years));
+    dispatch(condition === 'Regenerowane' ? setDays(days) : setDaysNew(days));
+    dispatch(
+      condition === 'Regenerowane' ? setMonths(months) : setMonthsNew(months),
+    );
+    dispatch(
+      condition === 'Regenerowane' ? setYears(years) : setYearsNew(years),
+    );
   };
 
   const sendEdit = () => {
-   dispatch(OrdersActions.editOrder(id,data)).then(()=>{
-    dispatch(setLoading(true))
-    dispatch(resetDataInFormReg())
-    dispatch(resetDataInFormNew())
-    navigation.goBack()
-    
-  })
+    dispatch(
+      OrdersActions.editOrder(
+        id,
+        condition === 'Regenerowane' ? data : dataNew,
+      ),
+    ).then(() => {
+      dispatch(setLoading(true));
+      dispatch(resetDataInFormReg());
+      dispatch(resetDataInFormNew());
+      navigation.goBack();
+    });
   };
 
-  useEffect(()=>{
-      dispatch(OrdersActions.getOneOrder(id,condition))
-  },[id])
+  useEffect(() => {
+    dispatch(OrdersActions.getOneOrder(id, condition));
+  }, [id,route]);
 
-  console.log(data);
   return (
-    <ScrollView style={{paddingHorizontal: 15}}>
+    <ScrollView>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          marginTop: 15,
+          // marginTop: 15,
+          backgroundColor: getColors('primary'),
+          height: 60,
+          width: DEVICE_WIDTH,
         }}>
         <TouchableOpacity
-          style={{position: 'absolute', left: 0}}
+          style={{position: 'absolute', left: 15}}
           onPress={() => {
             navigation.goBack();
+            dispatch(resetDataInFormReg());
             dispatch(resetDataInFormNew());
           }}>
           <BackArrowSvg />
@@ -92,12 +115,13 @@ export const EditOrderScreen = ({route}) => {
           style={{
             fontSize: 18,
             fontFamily: 'Montserrat-Bold',
-            color: getColors('black'),
+            color: getColors('white'),
           }}>
           {t('home.edit')}
         </Text>
       </View>
-      <View style={{marginTop: 40, marginBottom: 50}}>
+
+      <View style={{marginTop: 40, marginBottom: 50, paddingHorizontal: 15}}>
         <View>
           <Text
             style={{
@@ -116,11 +140,19 @@ export const EditOrderScreen = ({route}) => {
               paddingTop: 15,
             }}>
             <View style={{flexDirection: 'row'}}>
-              <Text style={{color: 'black'}}>{data.day}</Text>
-              <Text>/</Text>
-              <Text style={{color: 'black'}}>{data.month}</Text>
-              <Text>/</Text>
-              <Text style={{color: 'black'}}>{data.year}</Text>
+              <Text style={{color: getColors('black')}}>
+                {condition === 'Regenerowane'
+                  ? data.day + '/'
+                  : dataNew.day + '/'}
+              </Text>
+              <Text style={{color: getColors('black')}}>
+                {condition === 'Regenerowane'
+                  ? data.month + '/'
+                  : dataNew.month + '/'}
+              </Text>
+              <Text style={{color: getColors('black')}}>
+                {condition === 'Regenerowane' ? data.year : dataNew.year}
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -147,8 +179,16 @@ export const EditOrderScreen = ({route}) => {
           </Text>
           <CheckBox
             disabled={false}
-            value={data.deposit}
-            onValueChange={val => dispatch(setDeposit(val))}
+            value={
+              condition === 'Regenerowane' ? data.deposit : dataNew.deposit
+            }
+            onValueChange={val =>
+              dispatch(
+                condition === 'Regenerowane'
+                  ? setDepositReg(val)
+                  : setDepositNew(val),
+              )
+            }
           />
         </View>
         <View
@@ -164,55 +204,99 @@ export const EditOrderScreen = ({route}) => {
           </Text>
           <CheckBox
             disabled={false}
-            value={data.fv}
-            onValueChange={val => dispatch(setFv(val))}
+            value={condition === 'Regenerowane' ? data.fv : dataNew.fv}
+            onValueChange={val =>
+              dispatch(
+                condition === 'Regenerowane' ? setFvReg(val) : setFvNew(val),
+              )
+            }
           />
         </View>
         <InputApp
-          title={t('formAdd.commodity')}
-          placeholder={t('formAdd.commodity')}
-          value={data.part}
-          onChangeText={val => dispatch(setPart(val))}
+          title={t('formAdd.id')}
+          placeholder={t('formAdd.id')}
+          value={
+            condition === 'Regenerowane'
+              ? data.internal_id
+              : dataNew.internal_id
+          }
+          onChangeText={val =>
+            dispatch(
+              condition === 'Regenerowane'
+                ? setInternalId(val)
+                : setInternalIdNew(val),
+            )
+          }
         />
         <InputApp
-          title={t('formAdd.band')}
-          placeholder={t('formAdd.band')}
-          value={data.band_number}
-          onChangeText={val => dispatch(setBandNumber(val))}
+          title={t('formAdd.commodity')}
+          placeholder={t('formAdd.commodity')}
+          value={condition === 'Regenerowane' ? data.part : dataNew.part}
+          onChangeText={val =>
+            dispatch(
+              condition === 'Regenerowane' ? setPart(val) : setPartNew(val),
+            )
+          }
         />
+        {condition === 'Regenerowane' ? (
+          <InputApp
+            title={t('formAdd.band')}
+            placeholder={t('formAdd.band')}
+            value={data.band_number}
+            onChangeText={val => dispatch(setBandNumber(val))}
+          />
+        ) : (
+          <InputApp
+            title={t('formAdd.price')}
+            placeholder={t('formAdd.price')}
+            keyboardType={'numeric'}
+            value={dataNew.price}
+            onChangeText={val => dispatch(setPriceNew(val))}
+          />
+        )}
         <InputApp
           title={t('formAdd.index')}
           placeholder={t('formAdd.index')}
           keyboardType={'numeric'}
-          value={data.indexx}
-          onChangeText={val => dispatch(setIndexx(val))}
-        />
-        <InputApp
-          title={t('formAdd.price')}
-          placeholder={t('formAdd.price')}
-          keyboardType={'numeric'}
-          value={data.price}
-          onChangeText={val => dispatch(setPrice(val))}
+          value={condition === 'Regenerowane' ? data.indexx : dataNew.indexx}
+          onChangeText={val =>
+            dispatch(
+              condition === 'Regenerowane' ? setIndexx(val) : setIndexxNew(val),
+            )
+          }
         />
         <InputApp
           title={t('formAdd.contractor')}
           placeholder={t('formAdd.contractor')}
-          value={data.company}
-          onChangeText={val => dispatch(setCompany(val))}
+          value={condition === 'Regenerowane' ? data.company : dataNew.company}
+          onChangeText={val =>
+            dispatch(
+              condition === 'Regenerowane'
+                ? setCompany(val)
+                : setCompanyNew(val),
+            )
+          }
         />
         <InputApp
           title={t('formAdd.info')}
           placeholder={t('formAdd.info')}
           multiline={true}
-          value={data.note}
-          onChangeText={val => dispatch(setNote(val))}
+          value={condition === 'Regenerowane' ? data.note : dataNew.note}
+          onChangeText={val =>
+            dispatch(
+              condition === 'Regenerowane' ? setNote(val) : setNoteNew(val),
+            )
+          }
         />
       </View>
-      <ButtonApp
-        title={t('formAdd.add')}
-        textColor={getColors('white')}
-        onPress={() => sendEdit()}
-      />
+
+      <View style={{paddingHorizontal: 15, paddingBottom: 40}}>
+        <ButtonApp
+          title={t('formAdd.add')}
+          textColor={getColors('white')}
+          onPress={() => sendEdit()}
+        />
+      </View>
     </ScrollView>
   );
 };

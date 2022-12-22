@@ -4,6 +4,7 @@ import {AddOrder} from './addOrder.types';
 
 const initialState: AddOrder.AddOrderStateI = {
   data: {
+    internal_id:'',
     part: '',
     band_number: '',
     indexx: 0,
@@ -13,7 +14,8 @@ const initialState: AddOrder.AddOrderStateI = {
     month: '',
     year: '',
     time_morning:false,
-    fv:false
+    fv:false,
+    deposit:false
   },
 };
 
@@ -54,6 +56,12 @@ const orderSlice = createSlice({
     setTimeMorning: (state, action: PayloadAction<AddOrder.TimeMorning>) => {
       state.data.time_morning = action.payload;
     },
+    setDepositReg: (state, action: PayloadAction<AddOrder.Deposit>) => {
+      state.data.deposit = action.payload;
+    },
+    setInternalId: (state, action: PayloadAction<AddOrder.Internal_id>) => {
+      state.data.internal_id = action.payload;
+    },
     resetDataInFormReg: () => initialState,
   },
 });
@@ -70,6 +78,8 @@ export const {
   setYears,
   setFvReg,
   setTimeMorning,
+  setInternalId,
+  setDepositReg,
   resetDataInFormReg
 } = orderSlice.actions;
 export default orderSlice.reducer;

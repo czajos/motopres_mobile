@@ -55,7 +55,8 @@
         "invoice":"Faktura",
         "deposit2":"Kaucja/magazyn",
         "morning":"Rano",
-        "evening":"Wieczór"
+        "evening":"Wieczór",
+        "id":"ID"
       }
       
     }

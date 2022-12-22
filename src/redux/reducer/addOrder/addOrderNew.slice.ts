@@ -4,6 +4,7 @@ import {AddOrder} from './addOrder.types';
 
 const initialState: AddOrder.AddOrderNewStateI = {
   data: {
+    internal_id:'',
     part: '',
     band_number: '',
     indexx: 0,
@@ -22,7 +23,7 @@ const orderNewSlice = createSlice({
   name: 'addOrderNew',
   initialState,
   reducers: {
-    setAddOrders: (state, action: PayloadAction<any>) => {
+    setAddOrdersNew: (state, action: PayloadAction<any>) => {
       state.data = action.payload;
     },
     setPartNew: (state, action: PayloadAction<AddOrder.Part>) => {
@@ -58,12 +59,15 @@ const orderNewSlice = createSlice({
     setDepositNew: (state, action: PayloadAction<AddOrder.Deposit>) => {
       state.data.deposit = action.payload;
     },
+    setInternalIdNew: (state, action: PayloadAction<AddOrder.Internal_id>) => {
+      state.data.internal_id = action.payload;
+    },
     resetDataInFormNew: () => initialState,
   },
 });
 
 export const {
-  setAddOrders,
+  setAddOrdersNew,
   setPartNew,
   setBandNumberNew,
   setCompanyNew,
@@ -75,6 +79,7 @@ export const {
   setPriceNew,
   setFvNew,
   setDepositNew,
+  setInternalIdNew,
   resetDataInFormNew
 } = orderNewSlice.actions;
 export default orderNewSlice.reducer;

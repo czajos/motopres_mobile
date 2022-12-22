@@ -22,7 +22,12 @@ export const InputApp = ({
         {title}
       </Text>
       <View style={{borderBottomWidth: 1, borderColor: getColors('gray')}}>
-        <TextInput placeholder={placeholder} {...props} />
+        <TextInput
+          placeholder={placeholder}
+          placeholderTextColor={getColors('darkGray')}
+          style={{color: getColors('black')}}
+          {...props}
+        />
       </View>
     </View>
   );
