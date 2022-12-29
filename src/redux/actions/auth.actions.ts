@@ -1,6 +1,7 @@
 import {serverAddress} from '../../config';
 import {instance} from '../../instance';
 import {genericAsyncStorageOperator} from '../../utils/GenericAsyncStorage.service';
+import { toast } from '../../utils/toast';
 import {AppThunk} from '../AppThunk';
 import {setIsEditorThunk, setTokenThunk} from '../reducer/auth/auth.thunk';
 import { setVersionApk } from '../reducer/versionApk/versionApk.slice';
@@ -23,10 +24,14 @@ export namespace AuthActions {
             'isEditor',
             res.data.isEditor,
           );
+          console.log(res)
         await dispatch(InitialActions.initApp());
         dispatch(setIsEditorThunk(res.data.isEditor));
+        return true
       } catch (e) {
+        toast('Błędne dane logowania')
         console.log(e);
+        return false
       }
     };
 

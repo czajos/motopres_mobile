@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {View} from 'native-base';
 import {
   Dimensions,
   TouchableOpacity,
   Text,
   Modal,
   StatusBar,
+  View
 } from 'react-native';
 import {DEVICE_WIDTH} from '../../config';
 import {getColors} from '../../theme/colors';
@@ -37,9 +37,12 @@ export const HomeScreen = () => {
   const navigation = useNavigation();
   const isEditor = useSelector((state: any) => state.auth.isEditor);
   const loader = useSelector(state => state.loader);
+  const token = useSelector((state: any) => state.auth.token);
+
   // const [repeater,setRepeater]=useState(0)
 
   useEffect(() => {
+    console.log('action useeffect')
     dispatch(OrdersActions.getOrders()).then(() => {
       dispatch(setLoading(false));
     });
@@ -50,7 +53,7 @@ export const HomeScreen = () => {
    },20000)
      return()=>clearInterval(interval)
     
-  }, [loader]);
+  }, [loader,token]);
 
   const selectText = [
     {
@@ -77,11 +80,11 @@ export const HomeScreen = () => {
     setCondition(condition);
   };
   const filteredContracts = React.useMemo(() => {
-    return dataSelector.filter(e => e.condition === condition);
+    return dataSelector?.filter(e => e.condition === condition);
   }, [condition]);
 
   return (
-    <View flex={1} alignItems={'center'} backgroundColor={getColors('white')}>
+    <View style={{alignItems:'center',backgroundColor:getColors('white'),height:'100%'}}>
       <StatusBar
         backgroundColor={getColors('primary')}
         barStyle="light-content"
@@ -97,6 +100,7 @@ export const HomeScreen = () => {
         }
         rightOpenValue={-100}
         leftOpenValue={100}
+        // rightActionValue={-200}
         renderHiddenItem={({item}) => (
           <HiddenItem
           editor={isEditor}
@@ -108,7 +112,7 @@ export const HomeScreen = () => {
             }
             onPressDelete={() => {
               deleteOrder(item.id);
-            }}
+            }} 
           />
         )}
         renderItem={({item}: {item: any}) => {
@@ -142,7 +146,7 @@ export const HomeScreen = () => {
                   color:
                     item.condition === condition
                       ? getColors('primary')
-                      : getColors('lightGray'),
+                      : getColors('gray'),
                   fontWeight: item.condition === condition ? 'bold' : 'normal',
                   fontSize: item.condition === condition ? 14 : 14,
                 }}>
