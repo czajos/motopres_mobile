@@ -55,7 +55,7 @@ export const EditOrderScreen = ({route}) => {
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
+    setShow(false);
     setDate(currentDate);
 
     let newDate = new Date(currentDate);
@@ -161,8 +161,7 @@ export const EditOrderScreen = ({route}) => {
             testID="dateTimePicker"
             value={date}
             mode="date"
-            is24Hour={true}
-            display="default"
+            display={Platform.OS==='ios'? 'inline':'default'}
             onChange={onChange}
           />
         )}
@@ -292,7 +291,7 @@ export const EditOrderScreen = ({route}) => {
 
       <View style={{paddingHorizontal: 15, paddingBottom: 40}}>
         <ButtonApp
-          title={t('formAdd.add')}
+          title={t('home.edit')}
           textColor={getColors('white')}
           onPress={() => sendEdit()}
         />

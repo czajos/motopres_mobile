@@ -32,7 +32,11 @@
         "info":"Uwagi",
         "price":"Cena",
         "edit":"Edytuj",
-        "back":"Wróć"
+        "back":"Wróć",
+        "refresh":"Odśwież",
+      "noOrders":"Brak zleceń",
+      "infoDelete":"Usunieto zlecenie",
+      "backOrders":"Przywrócono zlecenie"
       },
       "modal":{
         "addOrders":"Dodaj zlecenie",

@@ -1,6 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {View, Pressable} from 'native-base';
-import {Dimensions, StyleSheet, Text, Image,TouchableOpacity} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {getColors} from '../../theme/colors';
 import PersonSvg from '../../assets/svg/PersonSvg';
@@ -9,23 +15,22 @@ import {InputLogin} from '../../components/InputLogin';
 import EyeBlockSvg from '../../assets/svg/EyeBlockSvg';
 import {convertAbsoluteToRem} from 'native-base/lib/typescript/theme/tools';
 import EyeOpenSvg from '../../assets/svg/EyeOpenSvg';
-import { useDispatch } from 'react-redux';
-import { AuthActions } from '../../redux/actions/auth.actions';
-import { useAppDispatch } from '../../redux/hook';
+import {useDispatch} from 'react-redux';
+import {AuthActions} from '../../redux/actions/auth.actions';
+import {useAppDispatch} from '../../redux/hook';
 
 const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 export const LoginScreen = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const {t} = useTranslation();
-  const [username,setUserName]=useState<string>('')
-  const [password,setPassword]=useState<string>('')
-  const dispatch=useAppDispatch()
-  
-  const submit=()=>{
-   dispatch(AuthActions.loginAction(username,password))
-  }
-  
+  const [username, setUserName] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const dispatch = useAppDispatch();
+
+  const submit = () => {
+    dispatch(AuthActions.loginAction(username, password));
+  };
 
   // const [data, setData] = useState({
   //   username: '',
@@ -110,7 +115,10 @@ export const LoginScreen = () => {
   // };
   return (
     <View style={styles.container}>
-      <Image source={require('../../assets/images/logo-menu.png')} />
+      <Image
+        source={require('../../assets/images/logoSplash.png')}
+        style={{width: 200, height: 50, marginBottom: 20}} resizeMode={'cover'}
+      />
       <Text
         style={{
           color: getColors('primary'),
@@ -119,13 +127,18 @@ export const LoginScreen = () => {
         }}>
         {t('loginScreen.login')}
       </Text>
-      <InputLogin value={username} onChangeText={(val)=>setUserName(val)} iconLeft={<PersonSvg />} placeholder={'login'} />
+      <InputLogin
+        value={username}
+        onChangeText={val => setUserName(val)}
+        iconLeft={<PersonSvg />}
+        placeholder={'login'}
+      />
       <InputLogin
         iconLeft={<LockSvg />}
         placeholder={'hasło'}
         type={showPassword ? 'text' : 'password'}
         value={password}
-        onChangeText={(val)=>setPassword(val)}
+        onChangeText={val => setPassword(val)}
         InputRightElement={
           <Pressable onPress={() => setShowPassword(!showPassword)}>
             {showPassword ? <EyeOpenSvg /> : <EyeBlockSvg />}
@@ -139,9 +152,9 @@ export const LoginScreen = () => {
           borderRadius: 10,
           backgroundColor: getColors('gray'),
           height: 35,
-          justifyContent:'center',
-          alignItems:'center',
-          marginTop:40
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 40,
         }}>
         <Text
           style={{

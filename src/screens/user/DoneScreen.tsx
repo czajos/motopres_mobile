@@ -12,6 +12,8 @@ import {deleteOrdersFromState} from '../../redux/reducer/orders/orders.slice';
 import {SelectButton} from '../../components/SelectButton';
 import {RefreshControl} from 'react-native-gesture-handler';
 import {setLoading} from '../../redux/reducer/loader/loader.slice';
+import { toast } from '../../utils/toast';
+import { useTranslation } from 'react-i18next';
 
 export const DoneScreen = () => {
   const data = useSelector(state => state.ordersDone.data);
@@ -19,11 +21,17 @@ export const DoneScreen = () => {
   const dispatch = useDispatch();
   const loader = useSelector(state => state.loader);
   const [refresh, setRefresh] = useState(false);
-  const filteredContracts = React.useMemo(() => {
-    return data.filter(e => e.condition === condition);
-  }, [condition]);
+  const {t} = useTranslation();
+  
+
   useEffect(() => {
     dispatch(OrdersActions.getOrdersDone());
+    const interval = setInterval(() => {
+      dispatch(OrdersActions.getOrdersDone()).then(() => {
+        dispatch(setLoading(false));
+      });
+    }, 20000);
+    return () => clearInterval(interval);
   }, [loader]);
 
   const selectText = [
@@ -45,6 +53,17 @@ export const DoneScreen = () => {
     setCondition(condition);
   };
 
+  const backHomeOrder = (id) => {
+    dispatch(OrdersActions.backToHomeList(id)).then(() =>
+      dispatch(setLoading(true)),
+      toast(t('home.backOrders'))
+
+    );
+  };
+  const filteredContracts = React.useMemo(() => {
+    return data.filter(e => e.condition === condition);
+  }, [condition,backHomeOrder]);
+
   return (
     <View flex={1} alignItems={'center'} backgroundColor={getColors('white')}>
       <StatusBar
@@ -62,14 +81,7 @@ export const DoneScreen = () => {
         }
         rightOpenValue={-100}
         renderHiddenItem={({item}) => (
-          <HiddenItem
-            undoOrders
-            onPressDelete={() =>
-              dispatch(OrdersActions.backToHomeList(item.id)).then(() =>
-                dispatch(setLoading(true)),
-              )
-            }
-          />
+          <HiddenItem undoOrders onPressDelete={() => backHomeOrder(item.id)} />
         )}
         renderItem={({item}: {item: any}) => {
           return (

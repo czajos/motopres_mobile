@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
   Dimensions,
   TouchableOpacity,
   Text,
   Modal,
   StatusBar,
-  View
+  View,
+  ActivityIndicator,
 } from 'react-native';
 import {DEVICE_WIDTH} from '../../config';
 import {getColors} from '../../theme/colors';
@@ -27,6 +28,9 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import {setLoading} from '../../redux/reducer/loader/loader.slice';
+import {t} from 'i18next';
+import {useTranslation} from 'react-i18next';
+import { toast } from '../../utils/toast';
 
 export const HomeScreen = () => {
   const [condition, setCondition] = useState<string>('Wszystkie');
@@ -38,23 +42,24 @@ export const HomeScreen = () => {
   const isEditor = useSelector((state: any) => state.auth.isEditor);
   const loader = useSelector(state => state.loader);
   const token = useSelector((state: any) => state.auth.token);
+  const {t} = useTranslation();
 
   // const [repeater,setRepeater]=useState(0)
 
   useEffect(() => {
-    console.log('action useeffect')
-    dispatch(OrdersActions.getOrders()).then(() => {
-      dispatch(setLoading(false));
-    });
-   const interval=setInterval(()=>{
-    dispatch(OrdersActions.getOrders()).then(() => {
-      dispatch(setLoading(false));
-    });
-   },20000)
-     return()=>clearInterval(interval)
+    console.log('action useeffect');
     
-  }, [loader,token]);
-
+    dispatch(OrdersActions.getOrders()).then(() => {
+      dispatch(setLoading(false));
+    });
+    const interval = setInterval(() => {
+      dispatch(OrdersActions.getOrders()).then(() => {
+        dispatch(setLoading(false));
+      });
+    }, 20000);
+    return () => clearInterval(interval);
+  }, [loader, token]);
+ 
   const selectText = [
     {
       id: 0,
@@ -73,23 +78,73 @@ export const HomeScreen = () => {
     dispatch(OrdersActions.deleteOrder(id)).then(() => {
       dispatch(deleteOrdersFromState(id));
       dispatch(setLoading(true));
+      toast(t('home.infoDelete'))
     });
   };
 
   const filter = condition => {
     setCondition(condition);
   };
-  const filteredContracts = React.useMemo(() => {
+  const filteredContracts = useMemo(() => {
     return dataSelector?.filter(e => e.condition === condition);
-  }, [condition]);
+  }, [condition,deleteOrder]);
 
+  const EmptyList = () => {
+    return (
+      <View
+        style={{
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text
+          style={{
+            fontFamily: 'Montserrat-Medium',
+            color: getColors('black'),
+            fontSize: 14,
+            marginBottom: 20,
+          }}>
+          {/* {t('home.noOrders')} */}
+          {filteredContracts?.length === 0 && condition === 'Regenerowane'
+            ? t('home.noOrders') + '-'+ condition
+            : filteredContracts?.length === 0 && condition === 'Nowe / używane'
+            ? t('home.noOrders') +'-'+  condition
+            : t('home.noOrders')}
+        </Text>
+        <TouchableOpacity
+          onPress={() => dispatch(OrdersActions.getOrders())}
+          style={{
+            backgroundColor: getColors('lightGray'),
+            paddingHorizontal: 30,
+            paddingVertical: 10,
+            borderRadius: 5,
+          }}>
+          <Text
+            style={{
+              fontFamily: 'Montserrat-Medium',
+              color: getColors('black'),
+              fontSize: 14,
+            }}>
+            {t('home.refresh')}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+const [backLeft,setBackLeft]=useState(100)
   return (
-    <View style={{alignItems:'center',backgroundColor:getColors('white'),height:'100%'}}>
+    <View
+      style={{
+        alignItems: 'center',
+        backgroundColor: getColors('white'),
+        height: '100%',
+      }}>
       <StatusBar
         backgroundColor={getColors('primary')}
         barStyle="light-content"
       />
       <SwipeListView
+        contentContainerStyle={{flexGrow: 1}}
         data={condition === 'Wszystkie' ? dataSelector : filteredContracts}
         refreshControl={
           <RefreshControl
@@ -99,20 +154,21 @@ export const HomeScreen = () => {
             }></RefreshControl>
         }
         rightOpenValue={-100}
-        leftOpenValue={100}
-        // rightActionValue={-200}
+        leftOpenValue={backLeft}
+        ListEmptyComponent={<EmptyList />}
         renderHiddenItem={({item}) => (
           <HiddenItem
-          editor={isEditor}
+            editor={isEditor}
             onPressEdit={() =>
-              navigation.navigate('EditOrderScreen', {
+             navigation.navigate('EditOrderScreen', {
                 id: item.id,
                 condition: item.condition,
               })
+              
             }
             onPressDelete={() => {
               deleteOrder(item.id);
-            }} 
+            }}
           />
         )}
         renderItem={({item}: {item: any}) => {
@@ -156,11 +212,12 @@ export const HomeScreen = () => {
           );
         })}
       </SelectButton>
-      {isEditor===true ? 
-      <HomeButton
-        icon={<AddSvg />}
-        onPress={() => navigation.navigate('ChoiceFormScreen')}
-      /> : null}
+      {isEditor === true ? (
+        <HomeButton
+          icon={<AddSvg />}
+          onPress={() => navigation.navigate('ChoiceFormScreen')}
+        />
+      ) : null}
     </View>
   );
 };

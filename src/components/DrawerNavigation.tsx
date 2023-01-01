@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View} from 'react-native';
+import {Platform, View} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {Drawer} from 'react-native-paper';
 import ListSvg from '../assets/svg/ListSvg';
@@ -34,7 +34,7 @@ export function DrawerNavigation(props) {
         path: downloadPath,
       },
     })
-      .fetch('GET', `${serverAddress}/upload/download`)
+      .fetch('POST', `${serverAddress}/upload/download`,{os:Platform.OS})
       .then(res => {
         android.actionViewIntent(
           res.path(),
@@ -42,6 +42,10 @@ export function DrawerNavigation(props) {
         );
       });
   };
+
+  // const checkPlatform=()=>{
+  //   Platform.OS==='ios' ? console.log('ios') : console.log('android')
+  // }
 
   return (
     <View style={{flex: 1}}>

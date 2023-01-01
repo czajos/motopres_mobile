@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "809345254677",
+    "project_id": "motopresv2",
+    "storage_bucket": "motopresv2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809345254677:android:3648ba080dae8ce662151c",
+        "android_client_info": {
+          "package_name": "com.motopres"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "809345254677-9p4uree5036gsgt4haqbolpeotr7bn9c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.motopres",
+            "certificate_hash": "ce8d10d92f99b4ceabc12ea10e5c2a25b8e3988c"
+          }
+        },
+        {
+          "client_id": "809345254677-g4n591v2sqqhqblbto5sq470jl74t8q7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCV2ADMMgNPIbCLd6ZE-_qNdLNMrOCGyZg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "809345254677-g4n591v2sqqhqblbto5sq470jl74t8q7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

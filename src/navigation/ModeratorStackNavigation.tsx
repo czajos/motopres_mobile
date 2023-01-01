@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {HomeScreen} from '../screens/user/HomeScreen';
 import {DrawerNavigation} from '../components/DrawerNavigation';
@@ -9,6 +9,7 @@ import {ChoiceFormScreen} from '../screens/moderator/ChoiceFormScreen';
 import {getColors} from '../theme/colors';
 import { AddNewScreen } from '../screens/moderator/AddNewScreen';
 import { EditOrderScreen } from '../screens/moderator/EditOrderScreen';
+import { notificationsService } from '../utils/notificationsService';
 
 export type MainStackNaviagtionParamList = {
   HomeScreen: undefined;
@@ -23,7 +24,7 @@ export type MainStackNaviagtionParamList = {
 export const ModeratorStackNavigation = () => {
   const Stack = createStackNavigator<MainStackNaviagtionParamList>();
   const Drawer = createDrawerNavigator<MainStackNaviagtionParamList>();
-
+  
   function HomeStack() {
     return (
       <Drawer.Navigator

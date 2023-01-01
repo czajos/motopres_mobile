@@ -1,5 +1,5 @@
 apply plugin: "com.android.application"
-
+apply plugin: 'com.google.gms.google-services'
 import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
 
@@ -139,7 +139,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "0.1"
+        versionName "0.2"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
         if (isNewArchitectureEnabled()) {
@@ -263,6 +263,18 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+implementation platform('com.google.firebase:firebase-bom:29.0.3')
+    // implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-analytics:17.3.0'
+     implementation project (':react-native-push-notification')
+    // implementation project(':react-native-fs')
+ 
+// implementation project(':react-native-firebase')
+implementation 'com.google.android.gms:play-services-base:16.1.0'
+implementation 'com.google.firebase:firebase-core:16.0.9'
+implementation 'com.google.firebase:firebase-config:17.0.0'
+implementation 'com.google.firebase:firebase-invites:17.0.0'
+implementation 'com.google.firebase:firebase-messaging:18.0.0'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'

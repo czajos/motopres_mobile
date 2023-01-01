@@ -7,13 +7,15 @@ import {ModeratorStackNavigation} from './ModeratorStackNavigation';
 import {useDispatch, useSelector} from 'react-redux';
 import {InitialActions} from '../redux/actions/initial.actions';
 import {AuthActions} from '../redux/actions/auth.actions';
+import { notificationsService } from '../utils/notificationsService';
+import { Platform } from 'react-native';
 
 const AppNavigator = () => {
   const [splash, setSplash] = useState<boolean>(true);
   const token = useSelector((state: any) => state.auth.token);
   const isEditor = useSelector((state: any) => state.auth.isEditor);
   const dispatch = useDispatch();
-  const [versionApk, setVersionApk] = useState('0.1');
+  const [versionApk, setVersionApk] = useState('0.2');
   useEffect(() => {
     const delayDuration: number = 2000;
     setTimeout((): void => setSplash(false), delayDuration);
@@ -27,7 +29,11 @@ const AppNavigator = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(AuthActions.versionAction(versionApk));
+    console.log('platform',Platform.OS)
+    dispatch(AuthActions.versionAction(versionApk,Platform.OS));
+  }, []);
+  useEffect(() => {
+    notificationsService.initializeFirebaseMessaging();
   }, []);
 
   return (
