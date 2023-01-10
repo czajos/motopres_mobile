@@ -34,7 +34,7 @@ export namespace AuthActions {
         if(res){
           getToken()
         }
-      
+        console.log(res.data)
         await genericAsyncStorageOperator.saveItem<string>(
           'token',
           res.data.token,

@@ -9,6 +9,7 @@ import {
   const initialState: AuthSliceI = {
     token: null,
     isEditor: false,
+    currentUser:null
   };
   
   export const authSlice = createSlice({
@@ -21,9 +22,12 @@ import {
       setIsEditor: (state, action: PayloadAction<AuthSliceIsEditorT>) => {
         state.isEditor = action.payload;
       },
+      setCurrentUser: (state, action: PayloadAction<AuthSliceIsEditorT>) => {
+        state.isEditor = action.payload;
+      },
     },
   });
   
-  export const {setToken, setIsEditor} = authSlice.actions;
+  export const {setToken, setIsEditor,setCurrentUser} = authSlice.actions;
   export default authSlice.reducer;
   

@@ -15,7 +15,7 @@ const AppNavigator = () => {
   const token = useSelector((state: any) => state.auth.token);
   const isEditor = useSelector((state: any) => state.auth.isEditor);
   const dispatch = useDispatch();
-  const [versionApk, setVersionApk] = useState('0.2');
+  const [versionApk, setVersionApk] = useState('0.4');
   useEffect(() => {
     const delayDuration: number = 2000;
     setTimeout((): void => setSplash(false), delayDuration);

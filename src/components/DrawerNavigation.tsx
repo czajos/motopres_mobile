@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Platform, View} from 'react-native';
+import {Platform, Text, View} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {Drawer} from 'react-native-paper';
 import ListSvg from '../assets/svg/ListSvg';
@@ -18,7 +18,7 @@ export function DrawerNavigation(props) {
   const dispatch = useDispatch();
   const versionApk = useSelector(state => state.versionApk);
   const downloadPath = `${RNFS.ExternalStorageDirectoryPath}/Download/app-release.apk`;
-  
+
   const downloadNewVersion = () => {
     const android = RNFetchBlob.android;
     RNFetchBlob.config({
@@ -34,7 +34,7 @@ export function DrawerNavigation(props) {
         path: downloadPath,
       },
     })
-      .fetch('POST', `${serverAddress}/upload/download`,{os:Platform.OS})
+      .fetch('GET', `${serverAddress}/upload/download/${Platform.OS}`)
       .then(res => {
         android.actionViewIntent(
           res.path(),
@@ -42,7 +42,7 @@ export function DrawerNavigation(props) {
         );
       });
   };
-
+  console.log('version', versionApk);
   // const checkPlatform=()=>{
   //   Platform.OS==='ios' ? console.log('ios') : console.log('android')
   // }
@@ -81,6 +81,17 @@ export function DrawerNavigation(props) {
           icon={() => <LogOutSvg />}
           label="Wyloguj się"
         />
+      </Drawer.Section>
+      <Drawer.Section>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            paddingHorizontal: 15,
+          }}>
+          <Text style={{marginRight: 5, fontSize: 12}}>Wersja</Text>
+          <Text style={{fontSize: 12}}>0.4</Text>
+        </View>
       </Drawer.Section>
     </View>
   );

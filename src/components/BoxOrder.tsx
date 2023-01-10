@@ -55,8 +55,8 @@ export const BoxOrder = ({
   price,
   internal_id,
 }: BoxOrderI) => {
-  const marginHorizontal: number = 5;
-  const widthBox = DEVICE_WIDTH - marginHorizontal * 2;
+  const marginHorizontal: number = 10;
+  const widthBox = DEVICE_WIDTH - (marginHorizontal * 2);
   const {t} = useTranslation();
   const [showMoreInfo, setShowMoreInfo] = useState<boolean>(false);
   const [actualHeight, setActualHeight] = useState<number>();

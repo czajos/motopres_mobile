@@ -35,6 +35,7 @@
         "back":"Wróć",
         "refresh":"Odśwież",
       "noOrders":"Brak zleceń",
+      "noDoneOrders":"Brak wykonanych zleceń",
       "infoDelete":"Usunieto zlecenie",
       "backOrders":"Przywrócono zlecenie"
       },

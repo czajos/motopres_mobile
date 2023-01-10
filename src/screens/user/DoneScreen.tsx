@@ -12,8 +12,8 @@ import {deleteOrdersFromState} from '../../redux/reducer/orders/orders.slice';
 import {SelectButton} from '../../components/SelectButton';
 import {RefreshControl} from 'react-native-gesture-handler';
 import {setLoading} from '../../redux/reducer/loader/loader.slice';
-import { toast } from '../../utils/toast';
-import { useTranslation } from 'react-i18next';
+import {toast} from '../../utils/toast';
+import {useTranslation} from 'react-i18next';
 
 export const DoneScreen = () => {
   const data = useSelector(state => state.ordersDone.data);
@@ -22,7 +22,6 @@ export const DoneScreen = () => {
   const loader = useSelector(state => state.loader);
   const [refresh, setRefresh] = useState(false);
   const {t} = useTranslation();
-  
 
   useEffect(() => {
     dispatch(OrdersActions.getOrdersDone());
@@ -53,16 +52,58 @@ export const DoneScreen = () => {
     setCondition(condition);
   };
 
-  const backHomeOrder = (id) => {
-    dispatch(OrdersActions.backToHomeList(id)).then(() =>
-      dispatch(setLoading(true)),
-      toast(t('home.backOrders'))
-
+  const backHomeOrder = id => {
+    dispatch(OrdersActions.backToHomeList(id)).then(
+      () => dispatch(setLoading(true)),
+      toast(t('home.backOrders')),
     );
   };
-  const filteredContracts = React.useMemo(() => {
-    return data.filter(e => e.condition === condition);
-  }, [condition,backHomeOrder]);
+  // const filteredContracts = React.useMemo(() => {
+  //   return data?.filter(e => e.condition === condition);
+  // }, [condition,backHomeOrder]);
+  const EmptyList = () => {
+    return (
+      <View
+        style={{
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text
+          style={{
+            fontFamily: 'Montserrat-Medium',
+            color: getColors('black'),
+            fontSize: 14,
+            marginBottom: 20,
+          }}>
+          {data?.filter(e => e.condition === condition).length === 0 &&
+          condition === 'Regenerowane'
+            ? t('home.noDoneOrders') + '-' + condition
+            : data?.filter(e => e.condition === condition).length === 0 &&
+              condition === 'Nowe / używane'
+            ? t('home.noDoneOrders') + '-' + condition
+            : t('home.noDoneOrders')}
+        </Text>
+        <TouchableOpacity
+          onPress={() => dispatch(OrdersActions.getOrdersDone())}
+          style={{
+            backgroundColor: getColors('lightGray'),
+            paddingHorizontal: 30,
+            paddingVertical: 10,
+            borderRadius: 5,
+          }}>
+          <Text
+            style={{
+              fontFamily: 'Montserrat-Medium',
+              color: getColors('black'),
+              fontSize: 14,
+            }}>
+            {t('home.refresh')}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <View flex={1} alignItems={'center'} backgroundColor={getColors('white')}>
@@ -70,8 +111,25 @@ export const DoneScreen = () => {
         backgroundColor={getColors('primary')}
         barStyle="light-content"
       />
+      {condition !== 'Wszystkie' ? (
+        <Text
+          style={{
+            fontFamily: 'Montserrat-Bold',
+            color: getColors('black'),
+            fontSize: 18,
+            paddingVertical: 5,
+          }}>
+          {condition}
+        </Text>
+      ) : null}
       <SwipeListView
-        data={condition === 'Wszystkie' ? data : filteredContracts}
+        contentContainerStyle={{flexGrow: 1, paddingHorizontal: 5}}
+        data={
+          condition === 'Wszystkie'
+            ? data
+            : data?.filter(e => e.condition === condition)
+        }
+        ListEmptyComponent={<EmptyList />}
         refreshControl={
           <RefreshControl
             refreshing={refresh}

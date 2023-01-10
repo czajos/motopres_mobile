@@ -20,35 +20,27 @@ import {SelectButton} from '../../components/SelectButton';
 import {RefreshControl} from 'react-native-gesture-handler';
 import {HomeButton} from '../../components/HomeButton';
 import AddSvg from '../../assets/svg/AddSvg';
-import {ModalAdd} from '../../components/ModalAdd';
-import {
-  NavigationContainer,
-  useFocusEffect,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {setLoading} from '../../redux/reducer/loader/loader.slice';
 import {t} from 'i18next';
 import {useTranslation} from 'react-i18next';
-import { toast } from '../../utils/toast';
+import {toast} from '../../utils/toast';
 
 export const HomeScreen = () => {
   const [condition, setCondition] = useState<string>('Wszystkie');
   const dataSelector = useSelector(state => state.orders.data);
   const [refresh, setRefresh] = useState(false);
-  const [openModal, setOpenModal] = useState<boolean>(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const isEditor = useSelector((state: any) => state.auth.isEditor);
   const loader = useSelector(state => state.loader);
   const token = useSelector((state: any) => state.auth.token);
   const {t} = useTranslation();
-
-  // const [repeater,setRepeater]=useState(0)
+  const [dataTest, setDataTest] = useState();
 
   useEffect(() => {
     console.log('action useeffect');
-    
+
     dispatch(OrdersActions.getOrders()).then(() => {
       dispatch(setLoading(false));
     });
@@ -59,7 +51,7 @@ export const HomeScreen = () => {
     }, 20000);
     return () => clearInterval(interval);
   }, [loader, token]);
- 
+
   const selectText = [
     {
       id: 0,
@@ -78,16 +70,26 @@ export const HomeScreen = () => {
     dispatch(OrdersActions.deleteOrder(id)).then(() => {
       dispatch(deleteOrdersFromState(id));
       dispatch(setLoading(true));
-      toast(t('home.infoDelete'))
+      toast(t('home.infoDelete'));
     });
   };
 
   const filter = condition => {
     setCondition(condition);
   };
-  const filteredContracts = useMemo(() => {
-    return dataSelector?.filter(e => e.condition === condition);
-  }, [condition,deleteOrder]);
+  // const filteredContracts = useMemo( () => {
+  //   console.log(dataSelector)
+  //   return dataSelector?.filter((e) => e.condition === condition);
+  // }, [condition,deleteOrder]);
+  //   const [filteredContracts,setFilteredContracts]=useState([])
+  // useEffect(()=>{
+  //    setFilteredContracts(dataSelector)
+  //    if(condition === 'Regenerowane' || condition === 'Nowe / używane'){
+  //   const x=  filteredContracts?.filter((e) => e.condition === condition)
+  //   setFilteredContracts(x)
+  //   console.log(x)
+  //    }
+  // },[condition,deleteOrder])
 
   const EmptyList = () => {
     return (
@@ -104,12 +106,18 @@ export const HomeScreen = () => {
             fontSize: 14,
             marginBottom: 20,
           }}>
-          {/* {t('home.noOrders')} */}
-          {filteredContracts?.length === 0 && condition === 'Regenerowane'
+          {dataSelector?.filter(e => e.condition === condition).length === 0 &&
+          condition === 'Regenerowane'
+            ? t('home.noOrders') + '-' + condition
+            : dataSelector?.filter(e => e.condition === condition).length ===
+                0 && condition === 'Nowe / używane'
+            ? t('home.noOrders') + '-' + condition
+            : t('home.noOrders')}
+          {/* {filteredContracts?.length === 0 && condition === 'Regenerowane'
             ? t('home.noOrders') + '-'+ condition
             : filteredContracts?.length === 0 && condition === 'Nowe / używane'
             ? t('home.noOrders') +'-'+  condition
-            : t('home.noOrders')}
+            : t('home.noOrders')} */}
         </Text>
         <TouchableOpacity
           onPress={() => dispatch(OrdersActions.getOrders())}
@@ -131,7 +139,7 @@ export const HomeScreen = () => {
       </View>
     );
   };
-const [backLeft,setBackLeft]=useState(100)
+  const [backLeft, setBackLeft] = useState(100);
   return (
     <View
       style={{
@@ -143,9 +151,24 @@ const [backLeft,setBackLeft]=useState(100)
         backgroundColor={getColors('primary')}
         barStyle="light-content"
       />
+      {condition !== 'Wszystkie' ? (
+        <Text
+          style={{
+            fontFamily: 'Montserrat-Bold',
+            color: getColors('black'),
+            fontSize: 18,
+            paddingVertical:5
+          }}>
+          {condition}
+        </Text>
+      ) : null}
       <SwipeListView
-        contentContainerStyle={{flexGrow: 1}}
-        data={condition === 'Wszystkie' ? dataSelector : filteredContracts}
+        contentContainerStyle={{flexGrow: 1, paddingHorizontal: 5}}
+        data={
+          condition === 'Wszystkie'
+            ? dataSelector
+            : dataSelector?.filter(e => e.condition === condition)
+        }
         refreshControl={
           <RefreshControl
             refreshing={refresh}
@@ -160,11 +183,10 @@ const [backLeft,setBackLeft]=useState(100)
           <HiddenItem
             editor={isEditor}
             onPressEdit={() =>
-             navigation.navigate('EditOrderScreen', {
+              navigation.navigate('EditOrderScreen', {
                 id: item.id,
                 condition: item.condition,
               })
-              
             }
             onPressDelete={() => {
               deleteOrder(item.id);

@@ -3,6 +3,7 @@ import {genericAsyncStorageOperator} from '../../utils/GenericAsyncStorage.servi
 import {AppThunk} from '../AppThunk';
 import {setIsEditorThunk, setTokenThunk} from '../reducer/auth/auth.thunk';
 import {AuthSliceTokenT, AuthSliceIsEditorT} from '../reducer/auth/auth.types';
+import { AuthActions } from './auth.actions';
 
 export namespace InitialActions {
   export const initApp = (): AppThunk<Promise<boolean>> => async dispatch => {
@@ -15,11 +16,9 @@ export namespace InitialActions {
       if (token) {
         dispatch(setTokenThunk(token));
         dispatch(setIsEditorThunk(isEditor));
-
         console.log('token: ', token);
         console.log('isEditor: ', isEditor);
-
-      }
+      } 
       return true;
     } catch (e: any) {
       console.error('error from init func: ', e);

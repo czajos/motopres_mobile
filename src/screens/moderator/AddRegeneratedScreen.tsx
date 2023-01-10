@@ -40,9 +40,6 @@ export const AddRegeneratedScreen = () => {
   const [show, setShow] = useState<boolean>(false);
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
-  const [day, setDay] = useState<number>();
-  const [month, setMonth] = useState<number>();
-  const [year, setYear] = useState<number>();
   const data = useSelector((state: any) => state.addOrders.data);
   const dispatch = useDispatch();
 
